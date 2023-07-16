@@ -1,0 +1,36 @@
+.footer{
+    background-color: rgb(51, 50, 50) !important;
+    color: rgb(218, 218, 218);
+    text-align: center;
+
+    &__rights{
+        font-size: 17px;
+    }
+
+    &__inner{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__links{
+        display: flex;
+        justify-content: center;
+        margin: 15px auto 10px;
+
+        a{
+            padding-right: 12.5px;
+            padding-left: 12.5px;
+            border-right: 1px solid rgb(218, 218, 218);
+        }
+
+        a:last-child{
+            border-right: none;
+        }
+    }
+}
+
+.mat-toolbar-row, .mat-toolbar-single-row {
+    height: fit-content;
+    padding: 15px;
+}

@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import url(./reset.scss);
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.container{
+    max-width: 1240px;
+    padding: 0 20px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.mat-body p, .mat-body-2 p, .mat-typography .mat-body p, .mat-typography .mat-body-2 p, .mat-typography p {
+    margin: 0;
+}
+
+app-root{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}

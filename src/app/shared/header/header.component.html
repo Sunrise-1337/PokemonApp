@@ -1,0 +1,29 @@
+<mat-toolbar color="warn">
+    <header class="header container">
+        <nav>
+            <a routerLink="" class="header__left">
+                <img src="../../../assets/images/logo.png" alt="Logo">
+                <p class="header__left-text">PokeApp</p>
+            </a>
+            <div class="header__right">
+                <a routerLink="/pokedex">Pokedex</a>
+                <a routerLink="/berries">Berries</a>
+                <a routerLink="/games">Games</a>
+            </div>
+            <button class="header__mob-button" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Navigation">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                    <a routerLink="/berries">Berries</a>
+                </button>
+                <button mat-menu-item>
+                    <a routerLink="/pokedex">Pokedex</a>
+                </button>
+                <button mat-menu-item>
+                    <a routerLink="/games">Games</a>
+                </button>
+            </mat-menu>
+        </nav>
+    </header>
+</mat-toolbar>

@@ -1,0 +1,55 @@
+.home{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    font-size: 15px;
+    color: rgb(126, 126, 126);
+    transition: 0.3ms;
+
+    &__card{
+        padding: 10px;
+        text-align: center;
+
+        &-blur{
+            display: none;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            background-color: rgb(206, 206, 206);
+            opacity: 0.4;
+        }
+
+        &-photo{
+            margin-bottom: 10px;
+
+            img{
+                object-fit: cover;
+                width: 300px;
+                height: 300px;
+            }
+        }
+
+        &-text{
+            font-size: 20px;
+            margin-bottom: 5px;
+            color: black;
+        }
+    }
+}
+
+.home__card:hover{
+    transform: scale(1.05);
+}
+
+.home__card:hover .home__card-blur{
+    display: block;
+}
+
+
+mat-card mat-card-content{
+    padding-bottom: 8px;
+}

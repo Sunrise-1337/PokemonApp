@@ -1,0 +1,16 @@
+<mat-drawer-container class="pokedex" autosize>
+    <mat-drawer #drawer class="pokedex__inspect" mode="side" position="end">
+        <!-- Компонент первичного обзора покемонов -->
+      <p>Auto-resizing sidenav</p>
+    </mat-drawer>
+  
+    <div class="pokedex__pokemon-list" *ngIf="allPokemons() as pokemons">
+        <!-- Компонент с каждым покемоном и его отрисовкой -->
+        <ng-container *ngFor="let pokemon of pokemons">
+            {{pokemon.name | titlecase}}
+        </ng-container>
+      <button type="button" mat-button (click)="drawer.toggle()">
+        Toggle sidenav
+      </button>
+    </div>
+</mat-drawer-container>
