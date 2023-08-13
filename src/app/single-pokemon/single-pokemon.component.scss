@@ -1,0 +1,101 @@
+.single{
+    padding-top: 40px;
+
+    &__wrap{
+        height: fit-content;
+        display: flex;
+    }
+
+    &__evolutions{
+        &-elem{
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+    }
+
+    &__info{
+        position: relative;
+        width: 100%;
+        padding: 60px 30px 40px 5%;
+        height: fit-content;
+
+        
+        &-left{
+            border-left: 1px solid rgb(167, 167, 167);
+            position: absolute;
+            top: 5%;
+            bottom: 0;
+            left: 0;
+        }   
+    }
+    
+    &__top{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+
+        
+        &-like{
+            mat-icon {
+                font-size: 2.325rem;
+                width: 2.325rem;
+                height: 2.325rem;
+                margin: 0;
+            }
+        } 
+
+        &-name{
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+    
+        &-types{
+            font-size: 23px;
+        }
+    }
+
+    &__img{     
+        &-wrap{
+            position: relative;
+            height: 100%;
+            min-height: 368px;
+            width: 368px;
+
+            img{
+                height: 100%;
+            }
+
+            button {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                padding: 5px 10px;
+                width: fit-content;
+            }
+        }
+    }
+}
+
+mat-card{
+    width: 100%;
+    flex: 1;
+}
+
+mat-card-content{
+    display: flex;
+    align-items: center;
+}
+
+::ng-deep mat-expansion-panel{
+    width: 80%;
+    margin: 50px auto !important;
+}
+
+::ng-deep .mat-expansion-panel-body{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}

@@ -1,0 +1,3 @@
+<app-pokemon-card [pokemonModel]="data.model"
+        [isFavorite]="isFav(data.model.name)"
+        (favWasToggled)="handleFavToggle($event)"></app-pokemon-card>

@@ -5,6 +5,10 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+app-root{
+    background-color: rgba($color: #eeeded, $alpha: 0.4);
+}
+
 .container{
     max-width: 1240px;
     padding: 0 20px;
@@ -16,8 +20,37 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     margin: 0;
 }
 
+mat-drawer-container{
+    width: 100%;
+}
+// 
 app-root{
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
+
+
+.viewWrapper, app-pokedex, app-home, app-berries, app-games, app-single-pokemon{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+} 
+
+app-single-pokemon{
+    max-width: 1280px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+app-loader{
+    display: contents;
+}
+
+.favourite{
+    background-color: rgb(252, 154, 147) !important;
+}
+
+.viewWrapper{
+    position: relative;
+} 

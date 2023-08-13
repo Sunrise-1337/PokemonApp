@@ -1,3 +1,5 @@
+import { Poketype } from "./poketype"
+
 export interface OnePokemonResponse {
     id: number,
     name: string,
@@ -29,13 +31,11 @@ export interface OnePokemonResponse {
 
     stats: Stat[],
 
-    types: Type[],
+    types: Poketype[],
 
     past_types: PastType[]
 
 }
-
-
 
 interface Stat{
     base_stat: number,
@@ -46,18 +46,10 @@ interface Stat{
     }
 }
 
-interface Type{
-    slot: number,
-    type: {
-        name: string,
-        url: string
-    }
-}
-
 interface PastType{
     generation: {
         name: string,
         url: string
     },
-    types: Type[]
+    types: Poketype[]
 }

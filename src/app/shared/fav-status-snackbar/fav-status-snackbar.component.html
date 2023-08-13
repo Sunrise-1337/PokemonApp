@@ -1,0 +1,10 @@
+<div class="snackbar">
+    <img src="../../../assets/images/pokeball.jpg" alt="pokeball">
+    <p>{{message}}</p>
+    <div class="snackbar__actions" matSnackBarActions>
+        <button matSnackBarAction mat-button 
+            (click)="toClose()" color="white">Ok</button>
+        <button matSnackBarAction mat-button 
+            (click)="toUndo()" color="white">Undo</button>
+    </div>
+</div>

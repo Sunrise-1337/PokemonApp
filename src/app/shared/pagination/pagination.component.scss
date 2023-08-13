@@ -1,0 +1,25 @@
+.pagination{
+    display: flex;
+    gap: 5px;
+
+    &__button{
+
+    }
+
+    &__filler{
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+    }
+
+    &__button, &__filler{
+        width: fit-content !important;
+        min-width: 35px !important;
+        height: 35px !important;
+        padding: 0 !important;
+    }
+}
+
+.active{
+    border-color: black !important;
+}
