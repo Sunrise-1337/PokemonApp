@@ -1,0 +1,38 @@
+.error{
+    width: 50vw;
+    max-width: 850px;
+    display: flex;
+    flex-direction: column;
+    font-family: Roboto;
+    padding: 20px;
+    color: rgb(104, 103, 103);
+
+    hr{
+        margin-bottom: 20px;
+    }
+
+    &__header{
+        &-1{
+            font-weight: bold;
+            font-size: 30px;
+            color: black;
+        }
+
+        &-2{
+            font-size: 23px;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+    }
+
+    &__message{
+        font-size: 20px;
+        margin-bottom: 20px;
+        word-wrap: break-word;
+    }
+
+    &__button{
+        align-self: flex-end;
+        max-width: 60px;
+    }
+}

@@ -43,6 +43,10 @@ app-single-pokemon{
     margin: 0 auto;
 }
 
+mat-drawer-content{
+    max-height: calc(100vh - 56px - 87px - 8px);
+}
+
 app-loader{
     display: contents;
 }
@@ -54,3 +58,8 @@ app-loader{
 .viewWrapper{
     position: relative;
 } 
+
+app-pokedex-filters .mat-expansion-panel-body{
+    display: flex;
+    flex-direction: column;
+}

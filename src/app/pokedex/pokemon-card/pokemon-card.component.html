@@ -8,7 +8,7 @@
             <mat-card-subtitle class="pokecard__types">{{pokemonModel.types | getTypesString}}</mat-card-subtitle>
         </mat-card-content>
         <mat-card-actions>
-            <a [routerLink]="'/pokemon/' + pokemonModel.id" class="pokecard__btn-wrap">
+            <a (click)="onGoneToFullPage()" [routerLink]="'/pokemon/' + pokemonModel.id" class="pokecard__btn-wrap">
                 <button class="pokecard__full" mat-button>See full page <mat-icon> keyboard_arrow_right </mat-icon></button>
             </a>
             <button class="pokecard__like" mat-button (click)="toggleFav()">

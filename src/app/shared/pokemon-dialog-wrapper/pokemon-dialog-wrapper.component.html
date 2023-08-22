@@ -1,3 +1,4 @@
 <app-pokemon-card [pokemonModel]="data.model"
         [isFavorite]="isFav(data.model.name)"
-        (favWasToggled)="handleFavToggle($event)"></app-pokemon-card>
+        (favWasToggled)="handleFavToggle($event)"
+        (isGoneToFullPage)="goneToFullPageHandler()"></app-pokemon-card>

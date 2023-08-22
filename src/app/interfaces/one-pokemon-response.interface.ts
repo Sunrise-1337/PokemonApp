@@ -1,4 +1,4 @@
-import { Poketype } from "./poketype"
+import { Poketype } from "./poketype.interface"
 
 export interface OnePokemonResponse {
     id: number,

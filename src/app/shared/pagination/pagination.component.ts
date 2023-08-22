@@ -57,12 +57,11 @@ export class PaginationComponent implements OnInit, OnChanges{
   changePages(n: number, doAnyway?: boolean): void {
     if (this.currentPage === n && !doAnyway) return;
 
-    
     this.changePage.emit(n)
 
     this.currentPage = n
 
-    if (n - this.minPage <= this.minPage) {
+    if (n === 1 || n - this.minPage <= this.minPage) {
       this.range(1);
     }
     if (n + this.minPage > this.pagesAmount) {

@@ -1,5 +1,5 @@
 import { getPokemonLink } from "../helpers/helper";
-import { OnePokemonResponse } from "../interfaces/one-pokemon-response";
+import { OnePokemonResponse } from "../interfaces/one-pokemon-response.interface";
 
 export class ResponseToUnit{
     name: string;

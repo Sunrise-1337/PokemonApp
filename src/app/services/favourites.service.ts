@@ -1,9 +1,10 @@
 import { ApplicationRef, Injectable, inject } from '@angular/core';
-import { OnePokemonResponse } from '../interfaces/one-pokemon-response';
-import { Result } from '../interfaces/result';
+import { OnePokemonResponse } from '../interfaces/one-pokemon-response.interface';
+import { Result } from '../classes/result';
 import { ResponseToUnit } from '../classes/responseToUnit';
 import { SnackbarService } from './snackbar.service';
 import { Observable, map, of, take } from 'rxjs';
+import { AllResultsResponse } from '../classes/all-results-response';
 
 @Injectable({
   providedIn: 'root'
@@ -59,8 +60,16 @@ export class FavouritesService {
     this.toggleFavs(new ResponseToUnit(unit))
   }
 
-  getFavsList(): Result[]{
-    return this.favouritesList
+  getFavsList(amount: number = 0, page: number = 0): AllResultsResponse{
+    const offset = amount * page,
+          realCount = this.favouritesList.length;
+
+    let limit = (offset + amount) > realCount ? realCount : amount;
+
+    console.log(offset, limit)
+    console.log(new AllResultsResponse(realCount, limit ? this.favouritesList.slice(offset, limit) : this.favouritesList))
+
+    return new AllResultsResponse(realCount, limit ? this.favouritesList.slice(offset, limit) : this.favouritesList)
   }
 
   isFav(unitName: string): boolean{

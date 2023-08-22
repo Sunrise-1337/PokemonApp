@@ -1,17 +1,14 @@
 <mat-drawer-container class="pokedex" autosize>
     <mat-drawer #filters opened class="pokedex__filters" mode="side">
-      <div class="content">
-        <p>gfhrrtjrtj</p>
-        <p>gfhrrtjrtj</p>
-        <p>gfhrrtjrtj</p>
-        <p>gfhrrtjrtj</p>
-        <p>gfhrrtjrtj</p>
-      </div>
+      <app-pokedex-filters [regionsArray]="regionsArray()"
+        [typesArray]="typesArray()"
+        [initialFilter]="filter"
+        (newFilterApplied)="handleNewFilterApplication($event)"></app-pokedex-filters>
     </mat-drawer>
   
     <div class="pokedex__pokemon-list" *ngIf="resultsResponse().results as pokemons">
-      <div class="pokedex__pokemon-wrap">
-        <button mat-raised-button *ngFor="let pokemon of pokemons"
+      <div class="pokedex__pokemon-wrap" *ngIf="!!pokemons.length; else noRes">
+        <button mat-raised-button *ngFor="let pokemon of pokemons; trackBy: getTrackForButtons"
           (click)="onPokemonChoice(pokemon.url)" [ngClass]="{'favourite': favsService.isFav(pokemon.name)}">
             {{pokemon.name | titlecase}}
         </button>
@@ -27,3 +24,10 @@
       </ng-container>
     </mat-drawer>
 </mat-drawer-container>
+
+
+<ng-template #noRes>
+  <div class="pokedex__noRes">
+    No results
+  </div>
+</ng-template>

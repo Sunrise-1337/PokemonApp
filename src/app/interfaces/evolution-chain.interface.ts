@@ -1,4 +1,4 @@
-import { Result } from "./result"
+import { Result } from "../classes/result"
 
 export interface EvolutionChain {
     chain?: SingleEvolution

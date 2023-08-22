@@ -1,1 +1,38 @@
-<p>pokedex-filters works!</p>
+<div class="filters">
+    <mat-checkbox class="filters__checkbox"
+        [checked]="isFilterActive('all')"
+        [disabled]="isFilterActive('all')"
+        (click)="handleNewFilterValue('all')">All Pokemons</mat-checkbox>
+    <mat-accordion class="filters__accordion" *ngIf="regionsArray">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title class="filters__title">Regions</mat-panel-title>
+            </mat-expansion-panel-header>
+                <mat-checkbox 
+                    [checked]="isFilterActive(region.name)" 
+                    [disabled]="isFilterActive(region.name)"
+                    *ngFor="let region of regionsArray; let index = index; trackBy: getTrackForButtons"
+                    (click)="handleNewFilterValue('region', region)" >
+                        {{region.name | titlecase}}
+                </mat-checkbox>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <mat-accordion class="single__evolutions" *ngIf="typesArray">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Types</mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-checkbox 
+                [checked]="type.name === activeFilter" 
+                [disabled]="isFilterActive(type.name)"
+                *ngFor="let type of typesArray; let index = index; trackBy: getTrackForButtons"
+                (click)="handleNewFilterValue('type', type)" >
+                    {{type.name | titlecase}}
+        </mat-checkbox>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <mat-checkbox class="filters__checkbox"
+        [checked]="activeFilter === 'favourites'"
+        [disabled]="isFilterActive('favourites')"
+        (click)="handleNewFilterValue('favourites')">Favourites</mat-checkbox>
+</div>

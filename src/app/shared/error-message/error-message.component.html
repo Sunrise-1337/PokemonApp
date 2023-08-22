@@ -1,0 +1,15 @@
+<div class="error">
+    <div class="error__header-1">
+        Error occured
+    </div>
+    <hr>
+    <ng-container *ngIf="data">
+        <div class="error__header-2">
+            {{data.error}}
+        </div>
+        <div class="error__message">
+            {{data.message}}
+        </div>
+    </ng-container>
+    <button class="error__button" mat-raised-button color="warn" (click)="closeDialog()">Ok</button>
+</div>

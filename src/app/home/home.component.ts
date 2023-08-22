@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 
-import { HomeCard } from '../interfaces/home-card';
+import { HomeCard } from '../interfaces/home-card.interface';
 import { Title } from '@angular/platform-browser';
 
 @Component({

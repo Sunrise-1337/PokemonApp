@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { FavStatusSnackbarComponent } from '../shared/fav-status-snackbar/fav-status-snackbar.component';
 import { MatSnackBar, MatSnackBarDismiss } from '@angular/material/snack-bar';
 import { TitleCasePipe } from '@angular/common';
-import { Result } from '../interfaces/result';
+import { Result } from '../classes/result';
 import { Observable } from 'rxjs';
 
 @Injectable({

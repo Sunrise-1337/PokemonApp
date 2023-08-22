@@ -2,12 +2,6 @@ mat-drawer{
     width: 220px;
 }
 
-.content{
-    background-color: #fff;
-    height: 100%;
-    width: 100%;
-}
-
 
 .pokedex{
     &__pokemon{
@@ -26,6 +20,7 @@ mat-drawer{
             flex-wrap: wrap;
             justify-content: flex-start;
             align-items: stretch;
+            width: 100%;
             gap: 4%;
 
             button{
@@ -42,7 +37,16 @@ mat-drawer{
     }
 
     &__filters{
-        padding: 10px 20px;
+        background-color: white !important;
+    }
+
+    &__noRes{
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 25px;
+        font-family: Roboto;
     }
 }
 

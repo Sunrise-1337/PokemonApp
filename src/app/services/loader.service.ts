@@ -12,10 +12,9 @@ export class LoaderService {
     this.count++
     this.isLoaderVisible.set(true)
   }
-
   
   toHideLoader(){
-    this.count--
+    if (this. count > 0) this.count--
     if (this.count === 0) this.isLoaderVisible.set(false)
   }
 }

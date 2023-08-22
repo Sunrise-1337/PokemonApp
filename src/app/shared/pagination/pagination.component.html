@@ -1,4 +1,4 @@
-<div class="pagination">
+<div class="pagination" *ngIf="pagesAmount > 1">
 
     <button [disabled]="currentPage <= (1 + halfAmount)" mat-stroked-button (click)="changePages(1)"
         class="pagination__button">1</button>

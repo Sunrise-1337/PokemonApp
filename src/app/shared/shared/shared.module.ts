@@ -10,6 +10,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 
 import { PaginationComponent } from '../pagination/pagination.component';
 
@@ -27,7 +29,8 @@ import { PaginationComponent } from '../pagination/pagination.component';
     MatSidenavModule,
     MatExpansionModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatCheckboxModule
   ],
   exports: [
     MatToolbarModule,
@@ -39,7 +42,8 @@ import { PaginationComponent } from '../pagination/pagination.component';
     PaginationComponent,
     MatExpansionModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatCheckboxModule
   ]
 })
 export class SharedModule { }

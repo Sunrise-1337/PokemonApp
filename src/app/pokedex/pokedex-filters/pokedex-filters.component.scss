@@ -1,0 +1,20 @@
+.filters{
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    &__accordion{
+        margin-bottom: 10px;
+    }
+}
+
+::ng-deep {
+    .filters .mat-mdc-checkbox.mat-mdc-checkbox-disabled label {
+        color: black !important;
+    }
+
+    .mdc-checkbox .mdc-checkbox__native-control[disabled]:checked~.mdc-checkbox__background, .mdc-checkbox .mdc-checkbox__native-control[disabled]:indeterminate~.mdc-checkbox__background, .mdc-checkbox .mdc-checkbox__native-control[data-indeterminate=true][disabled]~.mdc-checkbox__background {
+        background-color: #f44336 !important;
+    }
+}
