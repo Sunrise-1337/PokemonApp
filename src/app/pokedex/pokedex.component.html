@@ -9,7 +9,7 @@
     <div class="pokedex__pokemon-list" *ngIf="resultsResponse().results as pokemons">
       <div class="pokedex__pokemon-wrap" *ngIf="!!pokemons.length; else noRes">
         <button mat-raised-button *ngFor="let pokemon of pokemons; trackBy: getTrackForButtons"
-          (click)="onPokemonChoice(pokemon.url)" [ngClass]="{'favourite': favsService.isFav(pokemon.name)}">
+          (click)="onPokemonChoice(pokemon.url)" [ngClass]="{'favourite': isFav(pokemon.name)}">
             {{pokemon.name | titlecase}}
         </button>
       </div>

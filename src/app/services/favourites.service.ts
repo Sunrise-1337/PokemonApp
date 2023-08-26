@@ -5,6 +5,7 @@ import { ResponseToUnit } from '../classes/responseToUnit';
 import { SnackbarService } from './snackbar.service';
 import { Observable, map, of, take } from 'rxjs';
 import { AllResultsResponse } from '../classes/all-results-response';
+import { SubjectsService } from './subjects.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class FavouritesService {
   storageKey = 'favouritesList';
 
   private snackbarService = inject(SnackbarService)
+  private subjectsService = inject(SubjectsService)
   private appRef = inject(ApplicationRef)
 
   toInitList(): void{
@@ -35,6 +37,9 @@ export class FavouritesService {
       .subscribe(res => {
         if (res) {
           this.toggleLogic(unit)
+          // TODO
+          // Check Change Detection
+          // this.subjectsService.updateViewNotificationSignal.next(true)
           this.appRef.tick()
         }
       })

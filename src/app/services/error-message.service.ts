@@ -1,6 +1,7 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorMessageComponent } from '../shared/error-message/error-message.component';
+import { ErrorMessageData } from '../classes/error-message-data';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class ErrorMessageService {
 
   toShowErrorMessage(error: string, message: string): void{
     this.dialog.open(ErrorMessageComponent, {
-      data: {error, message},
+      data: new ErrorMessageData(error, message),
       height: 'fit-content',
       width: 'fit-content'
     })

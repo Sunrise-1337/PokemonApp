@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FavStatusSnackbarComponent } from './shared/fav-status-snackbar/fav-status-snackbar.component';
 import { TitleCasePipe } from '@angular/common';
@@ -19,6 +19,7 @@ import { SharedModule } from './shared/shared/shared.module';
 import { LoaderInterceptorService } from './interceptors/loader-interceptor.service';
 import { ErrorHandlingInterceptorService } from './interceptors/error-handling-interceptor.service';
 import { ErrorMessageComponent } from './shared/error-message/error-message.component';
+import { FavouritesService } from './services/favourites.service';
 
 
 @NgModule({
@@ -40,15 +41,21 @@ import { ErrorMessageComponent } from './shared/error-message/error-message.comp
     TitleCasePipe
   ],
   providers: [
-    provideRouter(routes, withComponentInputBinding()),
+    provideRouter(routes, withComponentInputBinding()),      
     {
-      provide: HTTP_INTERCEPTORS, 
-      useClass: LoaderInterceptorService, 
+      provide: APP_INITIALIZER, 
+      useFactory: (favouritesService: FavouritesService) => () => favouritesService.toInitList(),
+      deps: [FavouritesService],
       multi: true
-    },    
+    },
     {
       provide: HTTP_INTERCEPTORS, 
       useClass: ErrorHandlingInterceptorService, 
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS, 
+      useClass: LoaderInterceptorService, 
       multi: true
     },
     TitleCasePipe

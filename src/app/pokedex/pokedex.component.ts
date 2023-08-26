@@ -80,7 +80,7 @@ export class PokedexComponent implements OnInit {
 
   toInitVariables(): void{
     this.itemsCount = signal(0);
-    this.titleService.setTitle(`Page ${this.startPage} | Pokedex`)
+    this.toChangePageTitle()
 
     if (this.pokeId) {
       this.toAssignCurrentPokemon(this.apiService.getOnePokemon(+this.pokeId))
@@ -116,6 +116,10 @@ export class PokedexComponent implements OnInit {
     });
   }
 
+  toChangePageTitle(): void{
+    this.titleService.setTitle(`Page ${this.startPage} | Pokedex`)
+  }
+
   setCurrentPage(page: number): void{
     if (+this.startPage === page) return
 
@@ -126,10 +130,9 @@ export class PokedexComponent implements OnInit {
       queryParamsHandling: 'merge'
     });
 
-    this.titleService.setTitle(`Page ${this.startPage} | Pokedex`)
+    this.toChangePageTitle()
 
     this.toSetDisplayByType(this.filterSector, getLinkByTypeAndId(this.filterSector, this.filterId), this.currentPage - 1)
-    // this.toSetResultsResponseFromObservable(this.apiService.getAllPokemons(this.resultsPerPage(), this.currentPage - 1));
   }
 
   onPokemonChoice(url: string): void{
@@ -204,8 +207,6 @@ export class PokedexComponent implements OnInit {
     }
   }
 
-  // filtersSwitchCaseApplication()
-
   toSetResultsResponseFromObservable(observableToSet: Observable<AllResultsResponse>): void{
     this.resultsResponse = toSignal(
       observableToSet
@@ -256,9 +257,7 @@ export class PokedexComponent implements OnInit {
         .pipe(
           take(1)
         ).subscribe(() => {
-          console.log('cardRef subscription')
           if (!this.signalsService.isDialogCardClosedOnGoingToFullPage()) {
-            console.log('signal worked')
             this.toChangePokemonQuery('')
             this.signalsService.isDialogCardClosedOnGoingToFullPage.set(true)
           }

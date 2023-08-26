@@ -1,17 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FavouritesService } from './services/favourites.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent{
   title = 'pokemonApp';
-
-  favsService = inject(FavouritesService)
-
-  ngOnInit(): void{
-    this.favsService.toInitList()
-  }
 }
