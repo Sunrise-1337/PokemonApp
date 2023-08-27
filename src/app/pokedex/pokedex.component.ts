@@ -20,6 +20,7 @@ import { getIdFromLink, getLinkByTypeAndId, getPokemonLink } from '../helpers/he
 import { Result } from '../classes/result';
 import { FilterData } from '../classes/filterData';
 import { ApiRequestsModifierService } from '../services/apiRequestsModifier.service';
+import { TitleService } from '../services/title.service';
 
 @Component({
   standalone: true,
@@ -68,11 +69,12 @@ export class PokedexComponent implements OnInit {
   private signalsService = inject(SignalsService);
   public favsService = inject(FavouritesService);
   public apiModifier = inject(ApiRequestsModifierService);
+  private titleService = inject(TitleService);
 
   private dialogRef = inject(MatDialog);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
-  private titleService = inject(Title);
+
 
   ngOnInit(): void {
     this.toInitVariables()
@@ -80,7 +82,7 @@ export class PokedexComponent implements OnInit {
 
   toInitVariables(): void{
     this.itemsCount = signal(0);
-    this.toChangePageTitle()
+    this.titleService.toChangePokedexPageTitle(this.currentPage)
 
     if (this.pokeId) {
       this.toAssignCurrentPokemon(this.apiService.getOnePokemon(+this.pokeId))
@@ -116,10 +118,6 @@ export class PokedexComponent implements OnInit {
     });
   }
 
-  toChangePageTitle(): void{
-    this.titleService.setTitle(`Page ${this.startPage} | Pokedex`)
-  }
-
   setCurrentPage(page: number): void{
     if (+this.startPage === page) return
 
@@ -130,7 +128,7 @@ export class PokedexComponent implements OnInit {
       queryParamsHandling: 'merge'
     });
 
-    this.toChangePageTitle()
+    this.titleService.toChangePokedexPageTitle(this.currentPage)
 
     this.toSetDisplayByType(this.filterSector, getLinkByTypeAndId(this.filterSector, this.filterId), this.currentPage - 1)
   }
