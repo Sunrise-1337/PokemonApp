@@ -1,0 +1,24 @@
+// Scrollbar
+
+*, mat-drawer, mat-drawer-content {
+    // Scroll body
+    ::-webkit-scrollbar{
+        background: #FAFAFA !important;
+        width: 15px;
+    }
+
+    // Track
+    ::-webkit-scrollbar-track{
+        background: #FAFAFA !important;
+    }
+
+    // Handle
+    ::-webkit-scrollbar-thumb{
+        border: 3.5px #FAFAFA solid !important;
+    }
+
+    // On hover
+    ::-webkit-scrollbar-thumb:hover{
+        background: #a7a7a7 !important;
+    }
+}

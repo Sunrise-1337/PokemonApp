@@ -1,20 +1,23 @@
-import { Component, DestroyRef, Injector, OnInit, Signal, inject } from '@angular/core';
-import { SignalsService } from '../services/signals.service';
+import { ChangeDetectorRef, Component, DestroyRef, Injector, OnInit, Signal, inject } from '@angular/core';
+import { SignalsStoreService } from '../services/signals-store.service';
 import { ApiService } from '../services/api.service';
 import { OnePokemonResponse } from '../interfaces/one-pokemon-response.interface';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '../shared/shared/shared.module';
+import { SharedModule } from '../shared/shared-module/shared.module';
 import { GetTypesStringPipe } from '../pokedex/pipes/getTypesString.pipe';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { PokemonCardComponent } from '../pokedex/pokemon-card/pokemon-card.component';
 import { EvolutionChain, SingleEvolution } from '../interfaces/evolution-chain.interface';
-import { map, switchMap, take } from 'rxjs';
+import { map, switchMap, take, tap } from 'rxjs';
 import { Result } from '../classes/result';
 import { recursiveResultArray } from '../interfaces/types.interface';
 import { PokemonDialogWrapperComponent } from '../shared/pokemon-dialog-wrapper/pokemon-dialog-wrapper.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FavouritesService } from '../services/favourites.service';
+import { SubjectsNotificationService } from '../services/signals-notification.service';
+import { TitleService } from '../services/title.service';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   standalone: true,
@@ -26,14 +29,15 @@ import { FavouritesService } from '../services/favourites.service';
     RouterModule,
     SharedModule,
     GetTypesStringPipe,
-    PokemonCardComponent
+    TitleCasePipe,
+    PokemonCardComponent,
   ]
 })
 
 export class SinglePokemonComponent implements OnInit{
   isShiny: boolean = false;
 
-  private signalsService = inject(SignalsService)
+  private signalsStoreService = inject(SignalsStoreService)
   private api = inject(ApiService)
   public favsService = inject(FavouritesService)
 
@@ -41,13 +45,27 @@ export class SinglePokemonComponent implements OnInit{
   private dialogRef = inject(MatDialog)
   private actRoute = inject(ActivatedRoute)
   private destroyRef = inject(DestroyRef)
+  private subjectsNotificationService = inject(SubjectsNotificationService)
+  private cdRef = inject(ChangeDetectorRef)
+  private titleService = inject(TitleService)
+  private titleCasePipe = inject(TitleCasePipe)
 
 
-  pokemonModel: Signal<OnePokemonResponse | undefined> = this.signalsService.pokemonSignal;
+  pokemonModel: Signal<OnePokemonResponse | undefined> = this.signalsStoreService.pokemonSignal;
   evolutionArray: Signal<Result[] | undefined>;
   id: string;
 
   ngOnInit(): void {
+    this.toSetSubsciptions()
+  }
+
+  toSetPageTitle(name: string): void{
+    this.titleService.toSetPokemonNameTitle(
+      this.titleCasePipe.transform(name)
+    )
+  }
+  
+  toSetSubsciptions(): void{
     this.actRoute.params
       .pipe(
         map(res => res['id']),
@@ -56,18 +74,35 @@ export class SinglePokemonComponent implements OnInit{
       .subscribe(res => {
         this.id = res
 
-        this.toInitPage()
+        this.toSetSignals()
 
         this.dialogRef.closeAll()
       })
+
+    this.subjectsNotificationService.updateViewNotificationSubject
+      .pipe(
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(res => {
+        console.log('updateViewNotificationSignal')
+        this.cdRef.detectChanges()
+      })
   }
 
-  toInitPage(): void{
+  toSetSignals(): void{
     if (this.pokemonModel()?.id !== +this.id) {
-      this.pokemonModel = toSignal(this.api.getOnePokemon(+this.id), {
+      this.pokemonModel = toSignal(
+        this.api.getOnePokemon(+this.id)
+          .pipe(
+            tap(res => {
+              this.toSetPageTitle(res.name)
+            })
+          ), {
         initialValue: undefined,
         injector: this.injector,
       })
+    } else {
+      this.toSetPageTitle(this.pokemonModel()?.name as string)
     }
     
     this.evolutionArray = toSignal(

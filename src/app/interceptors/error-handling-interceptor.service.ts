@@ -1,9 +1,9 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { ApplicationRef, Injectable, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { ErrorMessageService } from '../services/error-message.service';
 import { LoaderService } from 'src/app/services/loader.service'
-import { SubjectsService } from '../services/subjects.service';
+import { SubjectsNotificationService } from '../services/signals-notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +12,7 @@ export class ErrorHandlingInterceptorService implements HttpInterceptor {
 
   private errorService = inject(ErrorMessageService)
   private loaderService = inject(LoaderService)
-  private subjectsService = inject(SubjectsService)
-  private appRef = inject(ApplicationRef)
+  private subjectsNotificationService = inject(SubjectsNotificationService)
 
   // Error
   // http://localhost:4200/pokemon/10115
@@ -23,10 +22,7 @@ export class ErrorHandlingInterceptorService implements HttpInterceptor {
       .pipe(
         catchError((res) => {
           this.loaderService.toHideLoader()
-          // TODO
-          // Check Change Detection
-          // this.subjectsService.updateViewNotificationSignal.next(true)
-          this.appRef.tick()
+          this.subjectsNotificationService.updateLoaderNotificationSubject.next(true)
           this.errorService.toShowErrorMessage(res.error, res.message)
 
           return throwError(() => res)

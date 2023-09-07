@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, WritableSignal, effect, inject } from '@angular/core';
-import { SignalsService } from 'src/app/services/signals.service';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, WritableSignal, inject } from '@angular/core';
+import { SignalsStoreService } from 'src/app/services/signals-store.service';
 
 @Component({
   selector: 'app-pagination',
@@ -11,9 +11,9 @@ export class PaginationComponent implements OnInit, OnChanges{
 
   @Output() changePage: EventEmitter<number> = new EventEmitter<number>();
 
-  private signalsService = inject(SignalsService)
+  private signalsStoreService = inject(SignalsStoreService)
 
-  pageToOpen: WritableSignal<number> = this.signalsService.pageToBeOpenedOnInit;
+  pageToOpen: WritableSignal<number> = this.signalsStoreService.pageToBeOpenedOnInit;
 
   pages: number[] = [];
   currentPage: number = 1;
@@ -26,7 +26,7 @@ export class PaginationComponent implements OnInit, OnChanges{
   halfAmount: number = 2;
 
   ngOnInit(): void {
-    this.range(this.signalsService.pageToBeOpenedOnInit())
+    this.range(this.signalsStoreService.pageToBeOpenedOnInit())
   }
 
   ngOnChanges(changes: SimpleChanges) {

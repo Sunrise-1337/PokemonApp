@@ -1,11 +1,11 @@
-import { ApplicationRef, Injectable, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { OnePokemonResponse } from '../interfaces/one-pokemon-response.interface';
 import { Result } from '../classes/result';
 import { ResponseToUnit } from '../classes/responseToUnit';
 import { SnackbarService } from './snackbar.service';
-import { Observable, map, of, take } from 'rxjs';
+import { map, take } from 'rxjs';
 import { AllResultsResponse } from '../classes/all-results-response';
-import { SubjectsService } from './subjects.service';
+import { SubjectsNotificationService } from './signals-notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +15,7 @@ export class FavouritesService {
   storageKey = 'favouritesList';
 
   private snackbarService = inject(SnackbarService)
-  private subjectsService = inject(SubjectsService)
-  private appRef = inject(ApplicationRef)
+  private subjectsNotificationService = inject(SubjectsNotificationService)
 
   toInitList(): void{
     const storageData: Result[] = JSON.parse(localStorage.getItem(this.storageKey) as string)
@@ -37,10 +36,8 @@ export class FavouritesService {
       .subscribe(res => {
         if (res) {
           this.toggleLogic(unit)
-          // TODO
-          // Check Change Detection
-          // this.subjectsService.updateViewNotificationSignal.next(true)
-          this.appRef.tick()
+      
+          this.subjectsNotificationService.updateViewNotificationSubject.next(true)
         }
       })
   }

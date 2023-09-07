@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 
 import { HomeCard } from '../interfaces/home-card.interface';
-import { Title } from '@angular/platform-browser';
+import { TitleService } from '../services/title.service';
 
 @Component({
   selector: 'app-home',
@@ -9,10 +9,10 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  private titleService = inject(Title);
+  private titleService = inject(TitleService);
 
   ngOnInit() {
-    this.titleService.setTitle('PokeApp')
+    this.titleService.toSetAppNameTitle()
   }
 
 

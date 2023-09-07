@@ -14,7 +14,7 @@ import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { LoaderComponent } from './shared/loader/loader.component';
-import { SharedModule } from './shared/shared/shared.module';
+import { SharedModule } from './shared/shared-module/shared.module';
 
 import { LoaderInterceptorService } from './interceptors/loader-interceptor.service';
 import { ErrorHandlingInterceptorService } from './interceptors/error-handling-interceptor.service';

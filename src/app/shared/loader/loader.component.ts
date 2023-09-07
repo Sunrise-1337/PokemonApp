@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, WritableSignal, inject } from '@angular/core';
 import { LoaderService } from 'src/app/services/loader.service';
-import { SubjectsService } from 'src/app/services/subjects.service';
+import { SubjectsNotificationService } from 'src/app/services/signals-notification.service';
 
 @Component({
   selector: 'app-loader',
@@ -10,12 +10,16 @@ import { SubjectsService } from 'src/app/services/subjects.service';
 export class LoaderComponent implements OnInit {
   public loaderService = inject(LoaderService);
 
-  private subjectsService = inject(SubjectsService)
+  private subjectsService = inject(SubjectsNotificationService)
   private cdRef = inject(ChangeDetectorRef)
 
+  toShow: WritableSignal<boolean> = this.loaderService.isLoaderVisible
+
   ngOnInit(): void {
-    // TODO
-    // Check Change Detection
-    // this.subjectsService.updateViewNotificationSignal.subscribe(res => this.cdRef.markForCheck())
+    this.subjectsService.updateLoaderNotificationSubject
+      .subscribe(res => {
+        console.log('loader subscription activated')
+        this.cdRef.detectChanges()
+      })
   }
 }

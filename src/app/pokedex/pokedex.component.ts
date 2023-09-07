@@ -1,18 +1,17 @@
-import { Component, Injector, Input, OnInit, Signal, ViewChild, WritableSignal, computed, inject, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, Injector, Input, OnInit, Signal, ViewChild, WritableSignal, computed, inject, signal } from '@angular/core';
 import { ApiService } from '../services/api.service';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { AllResultsResponse } from '../classes/all-results-response';
 import { OnePokemonResponse } from '../interfaces/one-pokemon-response.interface';
 import { MatDrawer } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Title } from '@angular/platform-browser';
-import { SignalsService } from '../services/signals.service';
+import { SignalsStoreService } from '../services/signals-store.service';
 import { PokemonCardComponent } from './pokemon-card/pokemon-card.component';
 import { PokedexFiltersComponent } from './pokedex-filters/pokedex-filters.component';
-import { SharedModule } from '../shared/shared/shared.module';
+import { SharedModule } from '../shared/shared-module/shared.module';
 import { GetTypesStringPipe } from './pipes/getTypesString.pipe';
 import { CommonModule } from '@angular/common';
-import { Observable, map, of, take, tap } from 'rxjs';
+import { Observable, map, of, pipe, take, tap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { PokemonDialogWrapperComponent } from '../shared/pokemon-dialog-wrapper/pokemon-dialog-wrapper.component';
 import { FavouritesService } from '../services/favourites.service';
@@ -21,6 +20,7 @@ import { Result } from '../classes/result';
 import { FilterData } from '../classes/filterData';
 import { ApiRequestsModifierService } from '../services/apiRequestsModifier.service';
 import { TitleService } from '../services/title.service';
+import { SubjectsNotificationService } from '../services/signals-notification.service';
 
 @Component({
   standalone: true,
@@ -66,7 +66,7 @@ export class PokedexComponent implements OnInit {
   private injector = inject(Injector);
 
   private apiService = inject(ApiService);
-  private signalsService = inject(SignalsService);
+  private signalsStoreService = inject(SignalsStoreService);
   public favsService = inject(FavouritesService);
   public apiModifier = inject(ApiRequestsModifierService);
   private titleService = inject(TitleService);
@@ -75,14 +75,29 @@ export class PokedexComponent implements OnInit {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
 
+  private subjectsService = inject(SubjectsNotificationService)
+  private destroyRef = inject(DestroyRef)
+  private cdRef = inject(ChangeDetectorRef)
 
   ngOnInit(): void {
     this.toInitVariables()
+    this.toSetSubsciptions()
+  }
+
+  toSetSubsciptions(): void{
+    this.subjectsService.updateViewNotificationSubject
+      .pipe(
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(res => {
+        this.cdRef.detectChanges()
+        console.log('marking for checking')
+      })
   }
 
   toInitVariables(): void{
     this.itemsCount = signal(0);
-    this.titleService.toChangePokedexPageTitle(this.currentPage)
+    this.titleService.toSetPokedexPageTitle(this.currentPage)
 
     if (this.pokeId) {
       this.toAssignCurrentPokemon(this.apiService.getOnePokemon(+this.pokeId))
@@ -94,7 +109,7 @@ export class PokedexComponent implements OnInit {
       this.setCurrentPage(this.startPage - 1)
     }
 
-    this.signalsService.pageToBeOpenedOnInit.set(+this.startPage)
+    this.signalsStoreService.pageToBeOpenedOnInit.set(+this.startPage)
 
     if (this.limit) this.resultsPerPage = signal(+this.limit)
     
@@ -128,7 +143,7 @@ export class PokedexComponent implements OnInit {
       queryParamsHandling: 'merge'
     });
 
-    this.titleService.toChangePokedexPageTitle(this.currentPage)
+    this.titleService.toSetPokedexPageTitle(this.currentPage)
 
     this.toSetDisplayByType(this.filterSector, getLinkByTypeAndId(this.filterSector, this.filterId), this.currentPage - 1)
   }
@@ -170,7 +185,7 @@ export class PokedexComponent implements OnInit {
   }
   
   handleNewFilterApplication(data: FilterData, firstCall: boolean = false): void{
-    if (!firstCall) this.signalsService.pageToBeOpenedOnInit.set(1)
+    if (!firstCall) this.signalsStoreService.pageToBeOpenedOnInit.set(1)
 
     this.toChangeFiltersQuery(data)
 
@@ -239,7 +254,7 @@ export class PokedexComponent implements OnInit {
   toOpenPokemonCard(data: OnePokemonResponse): void{
     if (window.innerWidth > 1440) {
       this.pokemonCardDrawer.open()
-      this.signalsService.pokemonSignal.set(data)
+      this.signalsStoreService.pokemonSignal.set(data)
     } else {
       this.pokemonCardDrawer.close()
       let cardRef = this.dialogRef.open(PokemonDialogWrapperComponent, {
@@ -255,9 +270,9 @@ export class PokedexComponent implements OnInit {
         .pipe(
           take(1)
         ).subscribe(() => {
-          if (!this.signalsService.isDialogCardClosedOnGoingToFullPage()) {
+          if (!this.signalsStoreService.isDialogCardClosedOnGoingToFullPage()) {
             this.toChangePokemonQuery('')
-            this.signalsService.isDialogCardClosedOnGoingToFullPage.set(true)
+            this.signalsStoreService.isDialogCardClosedOnGoingToFullPage.set(true)
           }
         })
     }
