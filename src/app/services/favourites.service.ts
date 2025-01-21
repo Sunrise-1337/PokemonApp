@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { OnePokemonResponse } from '../interfaces/one-pokemon-response.interface';
 import { Result } from '../models/result';
 import { ResponseToUnit } from '../models/responseToUnit';
@@ -6,6 +6,7 @@ import { SnackbarService } from './snackbar.service';
 import { map, take } from 'rxjs';
 import { AllResultsResponse } from '../models/all-results-response';
 import { SubjectsNotificationService } from './signals-notification.service';
+import { isPlatformServer } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,11 @@ export class FavouritesService {
 
   private snackbarService = inject(SnackbarService)
   private subjectsNotificationService = inject(SubjectsNotificationService)
+  private platformId = inject(PLATFORM_ID)
 
   toInitList(): void{
+    if (isPlatformServer(this.platformId)) return
+
     const storageData: Result[] = JSON.parse(localStorage.getItem(this.storageKey) as string)
 
     if (storageData) {

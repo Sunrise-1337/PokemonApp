@@ -1,15 +1,15 @@
 import { provideRouter, withComponentInputBinding } from '@angular/router';
-import { APP_INITIALIZER, importProvidersFrom } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TitleCasePipe } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { routes } from './app.routes';
 import { FavouritesService } from './services/favourites.service';
 import { ErrorHandlingInterceptorService } from './interceptors/error-handling-interceptor.service';
 import { LoaderInterceptorService } from './interceptors/loader-interceptor.service';
 
-export const appConfig = {
+export const appConfig: ApplicationConfig = {
     providers: [
         importProvidersFrom(BrowserModule),
         provideRouter(routes, withComponentInputBinding()),
@@ -31,6 +31,6 @@ export const appConfig = {
         },
         TitleCasePipe,
         provideHttpClient(withInterceptorsFromDi()),
-        provideAnimations()
+        provideAnimations(), provideClientHydration()
     ]
 }
