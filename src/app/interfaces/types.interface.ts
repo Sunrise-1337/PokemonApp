@@ -1,3 +1,3 @@
-import { Result } from "../classes/result";
+import { Result } from "../models/result";
 
 export type recursiveResultArray = (Result | Result[])[]

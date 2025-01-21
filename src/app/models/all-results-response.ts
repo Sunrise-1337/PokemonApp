@@ -1,4 +1,4 @@
-import { Result } from "../classes/result"
+import { Result } from "./result"
 
 export class AllResultsResponse {
     count: number;

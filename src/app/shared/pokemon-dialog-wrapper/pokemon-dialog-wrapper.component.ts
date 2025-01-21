@@ -2,7 +2,7 @@
 import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { OnePokemonResponse } from 'src/app/interfaces/one-pokemon-response.interface';
-import { PokemonCardComponent } from 'src/app/pokedex/pokemon-card/pokemon-card.component';
+import { PokemonCardComponent } from 'src/app/pages/pokedex/pokemon-card/pokemon-card.component';
 import { FavouritesService } from 'src/app/services/favourites.service';
 import { SignalsStoreService } from 'src/app/services/signals-store.service';
 
@@ -25,7 +25,7 @@ export class PokemonDialogWrapperComponent{
     this.signalsStoreService.isDialogCardClosedOnGoingToFullPage.set(true)
   }
 
-  handleFavToggle(arg: boolean): void{
+  handleFavToggle(): void{
     this.favsService.toggleFavsByResponse(this.data.model)
   }
 

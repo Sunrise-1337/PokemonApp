@@ -1,4 +1,4 @@
-import { Result } from "../classes/result";
+import { Result } from "../models/result";
 
 export interface Region{
     id: number;

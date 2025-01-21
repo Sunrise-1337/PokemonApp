@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { OnePokemonResponse } from '../interfaces/one-pokemon-response.interface';
-import { AllResultsResponse } from '../classes/all-results-response';
+import { AllResultsResponse } from '../models/all-results-response';
 import { SpeciesInfo } from '../interfaces/species-info.interface';
 import { EvolutionChain } from '../interfaces/evolution-chain.interface';
 import { base__url, sublinks } from '../constants/api.constants';

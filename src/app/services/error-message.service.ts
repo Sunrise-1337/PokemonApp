@@ -1,7 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorMessageComponent } from '../shared/error-message/error-message.component';
-import { ErrorMessageData } from '../classes/error-message-data';
+import { ErrorMessageData } from '../models/error-message-data';
 
 @Injectable({
   providedIn: 'root'

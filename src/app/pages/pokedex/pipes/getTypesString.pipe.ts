@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform, inject } from '@angular/core';
-import { Poketype } from '../../interfaces/poketype.interface';
+import { Poketype } from '../../../interfaces/poketype.interface';
 import { TitleCasePipe } from '@angular/common';
 
 @Pipe({

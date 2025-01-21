@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 
-import { HomeCard } from '../interfaces/home-card.interface';
-import { TitleService } from '../services/title.service';
+import { HomeCard } from '../../interfaces/home-card.interface';
+import { TitleService } from '../../services/title.service';
 import { NgTemplateOutlet } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatCard, MatCardImage, MatCardContent } from '@angular/material/card';

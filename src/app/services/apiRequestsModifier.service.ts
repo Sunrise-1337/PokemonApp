@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { Result } from '../classes/result';
-import { AllResultsResponse } from '../classes/all-results-response';
+import { Result } from '../models/result';
+import { AllResultsResponse } from '../models/all-results-response';
 import { ApiService } from './api.service';
 import { Observable, map, switchMap } from 'rxjs';
 import { turnSpeciesLinkIntoRegularPokemonLink } from '../helpers/helper';

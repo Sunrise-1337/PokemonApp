@@ -1,4 +1,4 @@
-import { Result } from "../classes/result"
+import { Result } from "../models/result"
 
 export interface SpeciesInfo {
     base_happiness: number

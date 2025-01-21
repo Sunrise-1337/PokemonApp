@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './pages/home/home.component';
 
 export const routes: Routes = [
   {
@@ -9,14 +9,14 @@ export const routes: Routes = [
   {
     path: "pokedex/:id", 
       loadComponent: 
-        () => import('./pokedex/pokedex.component')
+        () => import('./pages/pokedex/pokedex.component')
           .then(arg => arg.PokedexComponent)
   },
 
   {
     path: "pokemon/:id", 
       loadComponent: 
-        () => import('./single-pokemon/single-pokemon.component')
+        () => import('./pages/single-pokemon/single-pokemon.component')
           .then(arg => arg.SinglePokemonComponent)
   },
 

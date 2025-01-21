@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ErrorMessageData } from 'src/app/classes/error-message-data';
+import { ErrorMessageData } from 'src/app/models/error-message-data';
 import { MatButton } from '@angular/material/button';
 
 @Component({

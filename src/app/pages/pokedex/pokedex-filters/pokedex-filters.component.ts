@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { Result } from 'src/app/classes/result';
-import { FilterData } from 'src/app/classes/filterData';
+import { Result } from 'src/app/models/result';
+import { FilterData } from 'src/app/models/filterData';
 
 import {MatCheckboxModule} from '@angular/material/checkbox'
 import {MatExpansionModule} from '@angular/material/expansion';

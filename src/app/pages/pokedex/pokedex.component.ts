@@ -1,26 +1,26 @@
 import { ChangeDetectorRef, Component, DestroyRef, Injector, Input, OnInit, Signal, ViewChild, WritableSignal, computed, inject, signal } from '@angular/core';
-import { ApiService } from '../services/api.service';
+import { ApiService } from '../../services/api.service';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { AllResultsResponse } from '../classes/all-results-response';
-import { OnePokemonResponse } from '../interfaces/one-pokemon-response.interface';
+import { AllResultsResponse } from '../../models/all-results-response';
+import { OnePokemonResponse } from '../../interfaces/one-pokemon-response.interface';
 import { MatDrawer, MatDrawerContainer } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SignalsStoreService } from '../services/signals-store.service';
+import { SignalsStoreService } from '../../services/signals-store.service';
 import { PokemonCardComponent } from './pokemon-card/pokemon-card.component';
 import { PokedexFiltersComponent } from './pokedex-filters/pokedex-filters.component';
 
 import { CommonModule } from '@angular/common';
 import { Observable, map, of, take, tap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { PokemonDialogWrapperComponent } from '../shared/pokemon-dialog-wrapper/pokemon-dialog-wrapper.component';
-import { FavouritesService } from '../services/favourites.service';
-import { getIdFromLink, getLinkByTypeAndId, getPokemonLink } from '../helpers/helper';
-import { Result } from '../classes/result';
-import { FilterData } from '../classes/filterData';
-import { ApiRequestsModifierService } from '../services/apiRequestsModifier.service';
-import { TitleService } from '../services/title.service';
-import { SubjectsNotificationService } from '../services/signals-notification.service';
-import { PaginationComponent } from '../shared/pagination/pagination.component';
+import { PokemonDialogWrapperComponent } from '../../shared/pokemon-dialog-wrapper/pokemon-dialog-wrapper.component';
+import { FavouritesService } from '../../services/favourites.service';
+import { getIdFromLink, getLinkByTypeAndId, getPokemonLink } from '../../helpers/helper';
+import { Result } from '../../models/result';
+import { FilterData } from '../../models/filterData';
+import { ApiRequestsModifierService } from '../../services/apiRequestsModifier.service';
+import { TitleService } from '../../services/title.service';
+import { SubjectsNotificationService } from '../../services/signals-notification.service';
+import { PaginationComponent } from '../../shared/pagination/pagination.component';
 import { MatButton } from '@angular/material/button';
 
 @Component({

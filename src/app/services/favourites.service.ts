@@ -1,10 +1,10 @@
 import { Injectable, inject } from '@angular/core';
 import { OnePokemonResponse } from '../interfaces/one-pokemon-response.interface';
-import { Result } from '../classes/result';
-import { ResponseToUnit } from '../classes/responseToUnit';
+import { Result } from '../models/result';
+import { ResponseToUnit } from '../models/responseToUnit';
 import { SnackbarService } from './snackbar.service';
 import { map, take } from 'rxjs';
-import { AllResultsResponse } from '../classes/all-results-response';
+import { AllResultsResponse } from '../models/all-results-response';
 import { SubjectsNotificationService } from './signals-notification.service';
 
 @Injectable({
