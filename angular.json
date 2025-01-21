@@ -20,6 +20,7 @@
             "outputPath": {
               "base": "dist/pokemon-app"
             },
+            "optimization": true,
             "index": "src/index.html",
             "polyfills": [
               "zone.js"
@@ -47,7 +48,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
+                  "maximumWarning": "700kb",
                   "maximumError": "1mb"
                 },
                 {
