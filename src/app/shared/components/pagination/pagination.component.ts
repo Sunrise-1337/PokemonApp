@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, WritableSignal, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, WritableSignal, inject } from '@angular/core';
 import { SignalsStoreService } from 'src/app/services/signals-store.service';
 import { MatButton } from '@angular/material/button';
 import { NgClass } from '@angular/common';
@@ -8,6 +8,7 @@ import { NgClass } from '@angular/common';
     templateUrl: './pagination.component.html',
     styleUrls: ['./pagination.component.scss'],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [MatButton, NgClass]
 })
 export class PaginationComponent implements OnInit, OnChanges{

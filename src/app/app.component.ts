@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { LoaderComponent } from './shared/components/loader/loader.component';
@@ -11,6 +11,7 @@ import { RoutesMetaTagsService } from './services/routes-meta-tags.service';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [HeaderComponent, RouterOutlet, LoaderComponent, FooterComponent]
 })
 export class AppComponent{

@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, Signal } from '@angular/core';
 import { OnePokemonResponse } from 'src/app/interfaces/one-pokemon-response.interface'
 
-import { GetTypesStringPipe } from '../pipes/getTypesString.pipe';
+import { GetTypesStringPipe } from '../../pipes/getTypesString.pipe';
 import { RouterModule } from '@angular/router';
 import { MatCard, MatCardActions, MatCardContent, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
@@ -13,6 +13,7 @@ import { MatButton } from '@angular/material/button';
   selector: 'app-pokemon-card',
   templateUrl: './pokemon-card.component.html',
   styleUrls: ['./pokemon-card.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     RouterModule,

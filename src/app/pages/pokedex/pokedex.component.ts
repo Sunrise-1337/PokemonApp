@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, DestroyRef, Injector, Input, OnInit, Signal, ViewChild, WritableSignal, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, Injector, Input, OnInit, Signal, ViewChild, WritableSignal, computed, inject, signal } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { AllResultsResponseModel } from '../../models/all-results-response.model';
@@ -6,8 +6,8 @@ import { OnePokemonResponse } from '../../interfaces/one-pokemon-response.interf
 import { MatDrawer, MatDrawerContainer } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SignalsStoreService } from '../../services/signals-store.service';
-import { PokemonCardComponent } from './pokemon-card/pokemon-card.component';
-import { PokedexFiltersComponent } from './pokedex-filters/pokedex-filters.component';
+import { PokemonCardComponent } from './components/pokemon-card/pokemon-card.component';
+import { PokedexFiltersComponent } from './components/pokedex-filters/pokedex-filters.component';
 
 import { CommonModule } from '@angular/common';
 import { Observable, map, of, take, tap } from 'rxjs';
@@ -28,6 +28,7 @@ import { MatButton } from '@angular/material/button';
   selector: 'app-pokedex',
   templateUrl: './pokedex.component.html',
   styleUrls: ['./pokedex.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     PokemonCardComponent,
@@ -255,7 +256,7 @@ export class PokedexComponent implements OnInit {
   }
 
   toOpenPokemonCard(data: OnePokemonResponse): void{
-    if (window.innerWidth > 1440) {
+    if (window && window.innerWidth > 1440) {
       this.pokemonCardDrawer.open()
       this.signalsStoreService.pokemonSignal.set(data)
     } else {

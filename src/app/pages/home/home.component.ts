@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 
 import { HomeCard } from '../../interfaces/home-card.interface';
 import { TitleService } from '../../services/title.service';
@@ -11,6 +11,7 @@ import { MatCard, MatCardImage, MatCardContent } from '@angular/material/card';
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [NgTemplateOutlet, RouterLink, MatCard, MatCardImage, MatCardContent]
 })
 export class HomeComponent implements OnInit {

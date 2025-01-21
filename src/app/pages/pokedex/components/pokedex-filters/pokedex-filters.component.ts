@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -14,6 +14,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
   selector: 'app-pokedex-filters',
   templateUrl: './pokedex-filters.component.html',
   styleUrls: ['./pokedex-filters.component.scss'],  
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     RouterModule,

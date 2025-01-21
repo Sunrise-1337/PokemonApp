@@ -1,8 +1,8 @@
 
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { OnePokemonResponse } from 'src/app/interfaces/one-pokemon-response.interface';
-import { PokemonCardComponent } from 'src/app/pages/pokedex/pokemon-card/pokemon-card.component';
+import { PokemonCardComponent } from 'src/app/pages/pokedex/components/pokemon-card/pokemon-card.component';
 import { FavouritesService } from 'src/app/services/favourites.service';
 import { SignalsStoreService } from 'src/app/services/signals-store.service';
 
@@ -11,6 +11,7 @@ import { SignalsStoreService } from 'src/app/services/signals-store.service';
   selector: 'app-pokemon-dialog-wrapper',
   templateUrl: './pokemon-dialog-wrapper.component.html',
   styleUrls: ['./pokemon-dialog-wrapper.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     PokemonCardComponent
 ]

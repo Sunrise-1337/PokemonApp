@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBarRef, MatSnackBarActions, MatSnackBarAction } from '@angular/material/snack-bar';
 import { MatButton } from '@angular/material/button';
 
@@ -7,6 +7,7 @@ import { MatButton } from '@angular/material/button';
     templateUrl: './fav-status-snackbar.component.html',
     styleUrls: ['./fav-status-snackbar.component.scss'],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [MatSnackBarActions, MatButton, MatSnackBarAction]
 })
 export class FavStatusSnackbarComponent implements OnInit{

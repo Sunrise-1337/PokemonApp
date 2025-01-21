@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, DestroyRef, Injector, OnInit, Signal, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, Injector, OnInit, Signal, inject } from '@angular/core';
 import { SignalsStoreService } from '../../services/signals-store.service';
 import { ApiService } from '../../services/api.service';
 import { OnePokemonResponse } from '../../interfaces/one-pokemon-response.interface';
@@ -29,6 +29,7 @@ import { RoutesMetaDataConstants } from 'src/app/constants/routes-meta-data.cons
   selector: 'app-single-pokemon',
   templateUrl: './single-pokemon.component.html',
   styleUrls: ['./single-pokemon.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     RouterModule,
