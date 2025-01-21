@@ -24,17 +24,17 @@ export class HomeComponent implements OnInit {
   cards: HomeCard[] = [
     {
       name: "Pokedex",
-      img: "../../assets/images/pokedex.jpg",
+      img: "../../assets/images/pokedex.webp",
       url: "/pokedex/1",
     },
     {
       name: "Berries",
-      img: "../../assets/images/berries.jpg",
+      img: "../../assets/images/berries.webp",
       url: "/berries/1",
     },
     {
       name: "Games",
-      img: "../../assets/images/games.jpg",
+      img: "../../assets/images/games.webp",
       url: "/games/1",
     }
   ]
