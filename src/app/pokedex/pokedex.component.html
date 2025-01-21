@@ -1,28 +1,38 @@
 <mat-drawer-container class="pokedex" autosize>
-    <mat-drawer #filters opened class="pokedex__filters" mode="side">
-      <app-pokedex-filters [regionsArray]="regionsArray()"
-        [typesArray]="typesArray()"
-        [initialFilter]="filter"
-        (newFilterApplied)="handleNewFilterApplication($event)"></app-pokedex-filters>
-    </mat-drawer>
-  
-    <div class="pokedex__pokemon-list" *ngIf="resultsResponse().results as pokemons">
-      <div class="pokedex__pokemon-wrap" *ngIf="!!pokemons.length; else noRes">
-        <button mat-raised-button *ngFor="let pokemon of pokemons; trackBy: getTrackForButtons"
-          (click)="onPokemonChoice(pokemon.url)" [ngClass]="{'favourite': isFav(pokemon.name)}">
-            {{pokemon.name | titlecase}}
-        </button>
-      </div>
+  <mat-drawer #filters opened class="pokedex__filters" mode="side">
+    <app-pokedex-filters [regionsArray]="regionsArray()"
+      [typesArray]="typesArray()"
+      [initialFilter]="filter"
+    (newFilterApplied)="handleNewFilterApplication($event)"></app-pokedex-filters>
+  </mat-drawer>
+
+  @if (resultsResponse().results; as pokemons) {
+    <div class="pokedex__pokemon-list">
+      @if (!!pokemons.length) {
+        <div class="pokedex__pokemon-wrap">
+          @for (pokemon of pokemons; track getTrackForButtons($index, pokemon)) {
+            <button mat-raised-button
+              (click)="onPokemonChoice(pokemon.url)" [ngClass]="{'favourite': isFav(pokemon.name)}">
+              {{pokemon.name | titlecase}}
+            </button>
+          }
+        </div>
+      } @else {
+        <div class="pokedex__noRes">
+          No results
+        </div>
+      }
       <app-pagination (changePage)="setCurrentPage($event)" [pagesAmount]="pagesAmount()"></app-pagination>
     </div>
+  }
 
-    <mat-drawer #pokemonCardDrawer class="pokedex__inspect" mode="side" position="end">
-      <ng-container *ngIf="currentPokemon() as currentPokemon">
-        <app-pokemon-card [pokemonModel]="currentPokemon"
-          [isFavorite]="isFav(currentPokemon.name)"
-          (favWasToggled)="handleFavToggle()"></app-pokemon-card>
-      </ng-container>
-    </mat-drawer>
+  <mat-drawer #pokemonCardDrawer class="pokedex__inspect" mode="side" position="end">
+    @if (currentPokemon(); as currentPokemon) {
+      <app-pokemon-card [pokemonModel]="currentPokemon"
+        [isFavorite]="isFav(currentPokemon.name)"
+      (favWasToggled)="handleFavToggle()"></app-pokemon-card>
+    }
+  </mat-drawer>
 </mat-drawer-container>
 
 

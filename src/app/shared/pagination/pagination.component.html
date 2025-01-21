@@ -1,19 +1,17 @@
-<div class="pagination" *ngIf="pagesAmount > 1">
-
+@if (pagesAmount > 1) {
+  <div class="pagination">
     <button [disabled]="currentPage <= (1 + halfAmount)" mat-stroked-button (click)="changePages(1)"
-        class="pagination__button">1</button>
+    class="pagination__button">1</button>
     <p mat-stroked-button class="pagination__filler">...</p>
-
-    <ng-container *ngFor="let page of pages">
+    @for (page of pages; track page) {
       <button mat-stroked-button [ngClass]="{
                             active: page === currentPage
                         }"
-            (click)="changePages(page)" class="pagination__button"
-            [ngClass]="{'active': currentPage === page}">{{page}}</button>
-    </ng-container>
-
+        (click)="changePages(page)" class="pagination__button"
+      [ngClass]="{'active': currentPage === page}">{{page}}</button>
+    }
     <p mat-stroked-button class="pagination__filler">...</p>
     <button [disabled]="currentPage >= (pagesAmount - halfAmount)" mat-stroked-button (click)="changePages(pagesAmount)"
-        class="pagination__button">{{pagesAmount}}</button>
-
-</div>
+    class="pagination__button">{{pagesAmount}}</button>
+  </div>
+}

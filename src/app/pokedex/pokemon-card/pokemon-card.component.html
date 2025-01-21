@@ -1,19 +1,21 @@
 <div class="wrap">
-    <mat-card class="pokecard" *ngIf="pokemonModel">
-        <img mat-card-image [src]="isShiny ? pokemonModel.sprites.front_shiny : pokemonModel.sprites.front_default" [alt]="pokemonModel.name">
-        <button class="pokecard__shiny" mat-raised-button (click)="toggleShiny()">{{isShiny ? 'Normal' :'Shiny'}}</button>
-        <mat-card-content>        
-            <hr>
-            <mat-card-title class="pokecard__name">{{pokemonModel.name | uppercase}}</mat-card-title>
-            <mat-card-subtitle class="pokecard__types">{{pokemonModel.types | getTypesString}}</mat-card-subtitle>
+  @if (pokemonModel) {
+    <mat-card class="pokecard">
+      <img mat-card-image [src]="isShiny ? pokemonModel.sprites.front_shiny : pokemonModel.sprites.front_default" [alt]="pokemonModel.name">
+      <button class="pokecard__shiny" mat-raised-button (click)="toggleShiny()">{{isShiny ? 'Normal' :'Shiny'}}</button>
+      <mat-card-content>
+        <hr>
+          <mat-card-title class="pokecard__name">{{pokemonModel.name | uppercase}}</mat-card-title>
+          <mat-card-subtitle class="pokecard__types">{{pokemonModel.types | getTypesString}}</mat-card-subtitle>
         </mat-card-content>
         <mat-card-actions>
-            <a (click)="onGoneToFullPage()" [routerLink]="'/pokemon/' + pokemonModel.id" class="pokecard__btn-wrap">
-                <button class="pokecard__full" mat-button>See full page <mat-icon> keyboard_arrow_right </mat-icon></button>
-            </a>
-            <button class="pokecard__like" mat-button (click)="toggleFav()">
-                <mat-icon>{{isFavorite ? 'favorite' : 'favorite_border'}}</mat-icon>
-            </button>
+          <a (click)="onGoneToFullPage()" [routerLink]="'/pokemon/' + pokemonModel.id" class="pokecard__btn-wrap">
+            <button class="pokecard__full" mat-button>See full page <mat-icon> keyboard_arrow_right </mat-icon></button>
+          </a>
+          <button class="pokecard__like" mat-button (click)="toggleFav()">
+            <mat-icon>{{isFavorite ? 'favorite' : 'favorite_border'}}</mat-icon>
+          </button>
         </mat-card-actions>
-    </mat-card>
-</div>
+      </mat-card>
+    }
+  </div>

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { OnePokemonResponse } from 'src/app/interfaces/one-pokemon-response.interface';
@@ -12,9 +12,8 @@ import { SignalsStoreService } from 'src/app/services/signals-store.service';
   templateUrl: './pokemon-dialog-wrapper.component.html',
   styleUrls: ['./pokemon-dialog-wrapper.component.scss'],
   imports: [
-    CommonModule,
     PokemonCardComponent
-  ]
+]
 })
 export class PokemonDialogWrapperComponent{
   data: {model: OnePokemonResponse, isFav: boolean} = inject(MAT_DIALOG_DATA);

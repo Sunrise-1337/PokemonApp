@@ -1,3 +1,5 @@
-<div class="loader__wrap" *ngIf="loaderService.isLoaderVisible()" >
+@if (loaderService.isLoaderVisible()) {
+  <div class="loader__wrap" >
     <img class="loader" src="../../../assets/images/logo2.gif" alt="logo">
-</div>
+  </div>
+}

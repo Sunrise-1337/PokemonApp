@@ -1,25 +1,27 @@
 <div class="home container">
-    <ng-container *ngFor="let card of cards" 
-        [ngTemplateOutlet]="homeCard" 
-        [ngTemplateOutletContext]="card"
+  @for (card of cards; track card.url) {
+    <ng-container
+      [ngTemplateOutlet]="homeCard"
+      [ngTemplateOutletContext]="card"
     ></ng-container>
+  }
 </div>
 
 <ng-template #homeCard let-name="name" let-img="img" let-url="url">
-    <a [routerLink]="url">
-        <mat-card class="home__card">
-            <div class="home__card-photo">
-                <img mat-card-image [src]="img" alt="Photo">
-                <div class="home__card-blur"></div>
-            </div>
-            <mat-card-content>
-                <p class="home__card-text">
-                    {{name}}
-                </p>
-                <p>
-                    Open >
-                </p>
-            </mat-card-content>
-        </mat-card>
-    </a>
+  <a [routerLink]="url">
+    <mat-card class="home__card">
+      <div class="home__card-photo">
+        <img mat-card-image [src]="img" alt="Photo">
+        <div class="home__card-blur"></div>
+      </div>
+      <mat-card-content>
+        <p class="home__card-text">
+          {{name}}
+        </p>
+        <p>
+          Open >
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </a>
 </ng-template>

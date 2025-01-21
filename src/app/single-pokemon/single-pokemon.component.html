@@ -1,37 +1,39 @@
-<mat-card class="single" *ngIf="pokemonModel() as pokemonModel">
+@if (pokemonModel(); as pokemonModel) {
+  <mat-card class="single">
     <div class="single__wrap">
-        <div class="single__img-wrap">
-            <img mat-card-image [src]="isShiny ? pokemonModel.sprites.front_shiny : pokemonModel.sprites.front_default" [alt]="pokemonModel.name">
-            <button class="pokecard__shiny" mat-raised-button (click)="toggleShiny()">{{isShiny ? 'Normal' :'Shiny'}}</button>
+      <div class="single__img-wrap">
+        <img mat-card-image [src]="isShiny ? pokemonModel.sprites.front_shiny : pokemonModel.sprites.front_default" [alt]="pokemonModel.name">
+        <button class="pokecard__shiny" mat-raised-button (click)="toggleShiny()">{{isShiny ? 'Normal' :'Shiny'}}</button>
+      </div>
+      <div class="single__info">
+        <div class="single__info-left"></div>
+        <div class="single__top">
+          <div class="single__top-info">
+            <mat-card-title class="single__top-name">{{pokemonModel.name | uppercase}}</mat-card-title>
+            <mat-card-subtitle class="single__top-types">{{pokemonModel.types | getTypesString}}</mat-card-subtitle>
+          </div>
+          <div class="single__top-actions">
+            <button class="single__top-like" mat-button (click)="toggleFav()">
+              <mat-icon [innerText]="isFav(pokemonModel.name) ? 'favorite' : 'favorite_border'"></mat-icon>
+            </button>
+          </div>
         </div>
-        <div class="single__info">
-            <div class="single__info-left"></div>
-            <div class="single__top">
-                <div class="single__top-info">
-                    <mat-card-title class="single__top-name">{{pokemonModel.name | uppercase}}</mat-card-title>
-                    <mat-card-subtitle class="single__top-types">{{pokemonModel.types | getTypesString}}</mat-card-subtitle>
-                </div>
-                <div class="single__top-actions">
-                    <button class="single__top-like" mat-button (click)="toggleFav()">
-                        <mat-icon [innerText]="isFav(pokemonModel.name) ? 'favorite' : 'favorite_border'"></mat-icon>
-                    </button>
-                </div>
-            </div>
-            <div class="single__desc">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur exercitationem quidem, est, harum distinctio tempora eveniet illo beatae quod iste in alias culpa explicabo recusandae deleniti facilis nostrum voluptatem natus.
-                Pariatur ut facilis hic laudantium iure architecto odit eveniet soluta saepe explicabo cum exercitationem, excepturi sint voluptatibus asperiores modi natus minima, rerum possimus, labore maiores. Dolorem tempore consequatur aut provident!
-            </div>
+        <div class="single__desc">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur exercitationem quidem, est, harum distinctio tempora eveniet illo beatae quod iste in alias culpa explicabo recusandae deleniti facilis nostrum voluptatem natus.
+          Pariatur ut facilis hic laudantium iure architecto odit eveniet soluta saepe explicabo cum exercitationem, excepturi sint voluptatibus asperiores modi natus minima, rerum possimus, labore maiores. Dolorem tempore consequatur aut provident!
         </div>
+      </div>
     </div>
-    <div class="single__evolutions-wrapper" *ngIf="evolutionArray() as evolArray">
+    @if (evolutionArray(); as evolArray) {
+      <div class="single__evolutions-wrapper">
         <mat-accordion class="single__evolutions">
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>Evolutions</mat-panel-title>
-                </mat-expansion-panel-header>
-                <ng-container   *ngFor="let evol of evolArray; let index = index">
-                    <div class="single__evolutions-elem">
-                        <ng-container [ngTemplateOutlet]="isArray(evol) ? ifArray : buttonTemplate"
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Evolutions</mat-panel-title>
+            </mat-expansion-panel-header>
+            @for (evol of evolArray; track evol.url; let index = $index) {
+              <div class="single__evolutions-elem">
+                <ng-container [ngTemplateOutlet]="isArray(evol) ? ifArray : buttonTemplate"
                                     [ngTemplateOutletContext]="
                                         isArray(evol) 
                                             ? {
@@ -42,26 +44,30 @@
                                                 url: evol.url,
                                                 fav: favsService.isFav(evol.name)
                                             }">
-                        </ng-container>
-                    </div>
-                    <mat-icon *ngIf="index !== evolArray.length - 1"> keyboard_arrow_right </mat-icon>
-                </ng-container>
-            </mat-expansion-panel>
-        </mat-accordion>
+              </ng-container>
+            </div>
+            @if (index !== evolArray.length - 1) {
+              <mat-icon> keyboard_arrow_right </mat-icon>
+            }
+          }
+        </mat-expansion-panel>
+      </mat-accordion>
     </div>
+  }
 </mat-card>
+}
 
 <ng-template #ifArray let-array="array">
-    <ng-container *ngFor="let element of array">
-        <ng-container [ngTemplateOutlet]="buttonTemplate" 
-            [ngTemplateOutletContext]="{name: element.name, url: element.url, fav: element.fav}">
-        </ng-container>
+  @for (element of array; track element.url) {
+    <ng-container [ngTemplateOutlet]="buttonTemplate"
+      [ngTemplateOutletContext]="{name: element.name, url: element.url, fav: element.fav}">
     </ng-container>
+  }
 </ng-template>
 
 <ng-template #buttonTemplate let-name="name" let-url="url" let-fav="fav">
-    <button mat-raised-button (click)="onPokemonClick(url)"
-            [ngClass]="{'favourite': fav}">
-        {{name | titlecase}}
-    </button>
+  <button mat-raised-button (click)="onPokemonClick(url)"
+    [ngClass]="{'favourite': fav}">
+    {{name | titlecase}}
+  </button>
 </ng-template>
