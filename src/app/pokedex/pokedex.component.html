@@ -10,7 +10,7 @@
     <div class="pokedex__pokemon-list">
       @if (!!pokemons.length) {
         <div class="pokedex__pokemon-wrap">
-          @for (pokemon of pokemons; track getTrackForButtons($index, pokemon)) {
+          @for (pokemon of pokemons; track pokemon.url) {
             <button mat-raised-button
               (click)="onPokemonChoice(pokemon.url)" [ngClass]="{'favourite': isFav(pokemon.name)}">
               {{pokemon.name | titlecase}}

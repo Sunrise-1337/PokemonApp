@@ -9,7 +9,7 @@
         <mat-expansion-panel-header>
           <mat-panel-title class="filters__title">Regions</mat-panel-title>
         </mat-expansion-panel-header>
-        @for (region of regionsArray; track getTrackForButtons(index, region); let index = $index) {
+        @for (region of regionsArray; track region.url; let index = $index) {
           <mat-checkbox
             [checked]="isFilterActive(region.name)"
             [disabled]="isFilterActive(region.name)"
@@ -26,7 +26,7 @@
         <mat-expansion-panel-header>
           <mat-panel-title>Types</mat-panel-title>
         </mat-expansion-panel-header>
-        @for (type of typesArray; track getTrackForButtons(index, type); let index = $index) {
+        @for (type of typesArray; track type.url; let index = $index) {
           <mat-checkbox
             [checked]="type.name === activeFilter"
             [disabled]="isFilterActive(type.name)"

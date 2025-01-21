@@ -42,8 +42,4 @@ export class PokedexFiltersComponent implements OnInit{
   isFilterActive(filter: string): boolean{
     return this.activeFilter === filter
   }
-  
-  getTrackForButtons(index: number, item: Result): string{
-    return item.url
-  }
 }

@@ -9,7 +9,6 @@ import { SignalsStoreService } from '../services/signals-store.service';
 import { PokemonCardComponent } from './pokemon-card/pokemon-card.component';
 import { PokedexFiltersComponent } from './pokedex-filters/pokedex-filters.component';
 import { SharedModule } from '../shared/shared-module/shared.module';
-import { GetTypesStringPipe } from './pipes/getTypesString.pipe';
 import { CommonModule } from '@angular/common';
 import { Observable, map, of, pipe, take, tap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -31,8 +30,7 @@ import { SubjectsNotificationService } from '../services/signals-notification.se
     CommonModule,
     PokemonCardComponent, 
     PokedexFiltersComponent, 
-    SharedModule,
-    GetTypesStringPipe
+    SharedModule
   ]
 })
 export class PokedexComponent implements OnInit {
@@ -236,7 +234,7 @@ export class PokedexComponent implements OnInit {
   }
 
   toAssignCurrentPokemon(receivedObservable: Observable<OnePokemonResponse>): void{
-    this.currentPokemon = toSignal<OnePokemonResponse, undefined>(
+    this.currentPokemon = toSignal<OnePokemonResponse>(
       receivedObservable
         .pipe(
           tap(res => {
@@ -284,9 +282,5 @@ export class PokedexComponent implements OnInit {
 
   isFav(name: string): boolean{
     return this.favsService.isFav(name)
-  }
-
-  getTrackForButtons(index: number, item: Result): string{
-    return item.url
   }
 }
