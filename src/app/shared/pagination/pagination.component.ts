@@ -1,10 +1,14 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, WritableSignal, inject } from '@angular/core';
 import { SignalsStoreService } from 'src/app/services/signals-store.service';
+import { MatButton } from '@angular/material/button';
+import { NgClass } from '@angular/common';
 
 @Component({
-  selector: 'app-pagination',
-  templateUrl: './pagination.component.html',
-  styleUrls: ['./pagination.component.scss']
+    selector: 'app-pagination',
+    templateUrl: './pagination.component.html',
+    styleUrls: ['./pagination.component.scss'],
+    standalone: true,
+    imports: [MatButton, NgClass]
 })
 export class PaginationComponent implements OnInit, OnChanges{
   @Input() pagesAmount: number;

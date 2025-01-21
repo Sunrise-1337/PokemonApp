@@ -3,14 +3,14 @@ import { ApiService } from '../services/api.service';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { AllResultsResponse } from '../classes/all-results-response';
 import { OnePokemonResponse } from '../interfaces/one-pokemon-response.interface';
-import { MatDrawer } from '@angular/material/sidenav';
+import { MatDrawer, MatDrawerContainer } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SignalsStoreService } from '../services/signals-store.service';
 import { PokemonCardComponent } from './pokemon-card/pokemon-card.component';
 import { PokedexFiltersComponent } from './pokedex-filters/pokedex-filters.component';
-import { SharedModule } from '../shared/shared-module/shared.module';
+
 import { CommonModule } from '@angular/common';
-import { Observable, map, of, pipe, take, tap } from 'rxjs';
+import { Observable, map, of, take, tap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { PokemonDialogWrapperComponent } from '../shared/pokemon-dialog-wrapper/pokemon-dialog-wrapper.component';
 import { FavouritesService } from '../services/favourites.service';
@@ -20,6 +20,8 @@ import { FilterData } from '../classes/filterData';
 import { ApiRequestsModifierService } from '../services/apiRequestsModifier.service';
 import { TitleService } from '../services/title.service';
 import { SubjectsNotificationService } from '../services/signals-notification.service';
+import { PaginationComponent } from '../shared/pagination/pagination.component';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   standalone: true,
@@ -28,9 +30,12 @@ import { SubjectsNotificationService } from '../services/signals-notification.se
   styleUrls: ['./pokedex.component.scss'],
   imports: [
     CommonModule,
-    PokemonCardComponent, 
-    PokedexFiltersComponent, 
-    SharedModule
+    PokemonCardComponent,
+    PokedexFiltersComponent,
+    PaginationComponent,
+    MatDrawer,
+    MatDrawerContainer,
+    MatButton
   ]
 })
 export class PokedexComponent implements OnInit {

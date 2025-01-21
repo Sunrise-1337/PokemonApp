@@ -1,9 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, Signal } from '@angular/core';
 import { OnePokemonResponse } from 'src/app/interfaces/one-pokemon-response.interface'
-import { SharedModule } from 'src/app/shared/shared-module/shared.module';
+
 import { GetTypesStringPipe } from '../pipes/getTypesString.pipe';
 import { RouterModule } from '@angular/router';
+import { MatCard, MatCardActions, MatCardContent, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   standalone: true,
@@ -13,9 +16,15 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     RouterModule,
-    SharedModule,
+    MatCard,
+    MatIcon,
+    MatCardTitle,
+    MatCardSubtitle,
+    MatCardActions,
+    MatCardContent,
+    MatButton,
     GetTypesStringPipe
-  ]
+]
 })
 export class PokemonCardComponent{
   @Input() pokemonModel: OnePokemonResponse;

@@ -3,9 +3,10 @@ import { LoaderService } from 'src/app/services/loader.service';
 import { SubjectsNotificationService } from 'src/app/services/signals-notification.service';
 
 @Component({
-  selector: 'app-loader',
-  templateUrl: './loader.component.html',
-  styleUrls: ['./loader.component.scss']
+    selector: 'app-loader',
+    templateUrl: './loader.component.html',
+    styleUrls: ['./loader.component.scss'],
+    standalone: true
 })
 export class LoaderComponent implements OnInit {
   public loaderService = inject(LoaderService);

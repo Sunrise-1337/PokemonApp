@@ -2,11 +2,16 @@ import { Component, OnInit, inject } from '@angular/core';
 
 import { HomeCard } from '../interfaces/home-card.interface';
 import { TitleService } from '../services/title.service';
+import { NgTemplateOutlet } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { MatCard, MatCardImage, MatCardContent } from '@angular/material/card';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
+    standalone: true,
+    imports: [NgTemplateOutlet, RouterLink, MatCard, MatCardImage, MatCardContent]
 })
 export class HomeComponent implements OnInit {
   private titleService = inject(TitleService);

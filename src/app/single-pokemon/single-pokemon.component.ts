@@ -3,7 +3,7 @@ import { SignalsStoreService } from '../services/signals-store.service';
 import { ApiService } from '../services/api.service';
 import { OnePokemonResponse } from '../interfaces/one-pokemon-response.interface';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '../shared/shared-module/shared.module';
+
 import { GetTypesStringPipe } from '../pokedex/pipes/getTypesString.pipe';
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterModule } from '@angular/router';
@@ -18,20 +18,28 @@ import { FavouritesService } from '../services/favourites.service';
 import { SubjectsNotificationService } from '../services/signals-notification.service';
 import { TitleService } from '../services/title.service';
 import { TitleCasePipe } from '@angular/common';
+import { MatCard, MatCardTitle, MatCardSubtitle} from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   standalone: true,
   selector: 'app-single-pokemon',
   templateUrl: './single-pokemon.component.html',
   styleUrls: ['./single-pokemon.component.scss'],
-  imports: [    
+  imports: [
     CommonModule,
     RouterModule,
-    SharedModule,
+    MatCard,
+    MatIcon,
+    MatCardTitle,
+    MatCardSubtitle,
+    MatExpansionModule,
     GetTypesStringPipe,
+    MatButton,
     TitleCasePipe,
-    PokemonCardComponent,
-  ]
+]
 })
 
 export class SinglePokemonComponent implements OnInit{

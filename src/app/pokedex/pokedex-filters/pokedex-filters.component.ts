@@ -1,9 +1,13 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { SharedModule } from 'src/app/shared/shared-module/shared.module';
+
 import { Result } from 'src/app/classes/result';
 import { FilterData } from 'src/app/classes/filterData';
+
+import {MatCheckboxModule} from '@angular/material/checkbox'
+import {MatExpansionModule} from '@angular/material/expansion';
+
 
 @Component({
   standalone: true,
@@ -13,7 +17,8 @@ import { FilterData } from 'src/app/classes/filterData';
   imports: [
     CommonModule,
     RouterModule,
-    SharedModule
+    MatCheckboxModule,
+    MatExpansionModule
   ]
 })
 export class PokedexFiltersComponent implements OnInit{

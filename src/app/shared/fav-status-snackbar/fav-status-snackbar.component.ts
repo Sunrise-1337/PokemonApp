@@ -1,10 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
+import { MAT_SNACK_BAR_DATA, MatSnackBarRef, MatSnackBarActions, MatSnackBarAction } from '@angular/material/snack-bar';
+import { MatButton } from '@angular/material/button';
 
 @Component({
-  selector: 'app-fav-status-snackbar',
-  templateUrl: './fav-status-snackbar.component.html',
-  styleUrls: ['./fav-status-snackbar.component.scss']
+    selector: 'app-fav-status-snackbar',
+    templateUrl: './fav-status-snackbar.component.html',
+    styleUrls: ['./fav-status-snackbar.component.scss'],
+    standalone: true,
+    imports: [MatSnackBarActions, MatButton, MatSnackBarAction]
 })
 export class FavStatusSnackbarComponent implements OnInit{
   message: string;
