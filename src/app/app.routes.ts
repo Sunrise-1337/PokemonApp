@@ -1,23 +1,29 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
+import { RoutesMetaDataConstants } from './constants/routes-meta-data.constants';
 
 export const routes: Routes = [
   {
-    path: "", component: HomeComponent
+    path: "",  
+    loadComponent: 
+      () => import('./pages/home/home.component')
+        .then(arg => arg.HomeComponent),
+    data: RoutesMetaDataConstants.home
   },  
   
   {
     path: "pokedex/:id", 
-      loadComponent: 
-        () => import('./pages/pokedex/pokedex.component')
-          .then(arg => arg.PokedexComponent)
+    loadComponent: 
+      () => import('./pages/pokedex/pokedex.component')
+        .then(arg => arg.PokedexComponent),
+    data: RoutesMetaDataConstants.pokedex
   },
 
   {
     path: "pokemon/:id", 
-      loadComponent: 
-        () => import('./pages/single-pokemon/single-pokemon.component')
-          .then(arg => arg.SinglePokemonComponent)
+    loadComponent: 
+      () => import('./pages/single-pokemon/single-pokemon.component')
+        .then(arg => arg.SinglePokemonComponent)
   },
 
   

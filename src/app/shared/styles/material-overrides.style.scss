@@ -1,0 +1,16 @@
+.mat-body p, .mat-body-2 p, .mat-typography .mat-body p, .mat-typography .mat-body-2 p, .mat-typography p {
+    margin: 0;
+}
+
+mat-drawer-container{
+    width: 100%;
+}
+
+app-pokedex-filters .mat-expansion-panel-body{
+    display: flex;
+    flex-direction: column;
+}
+
+mat-drawer-content{
+    max-height: calc(100vh - 56px - 87px - 8px);
+}

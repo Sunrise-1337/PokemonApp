@@ -1,8 +1,8 @@
-import { Result } from "../models/result";
+import { ResultModel } from "../models/result.model";
 
 export interface Region{
     id: number;
     name: string;
     url: string;
-    pokedexes: Result[]
+    pokedexes: ResultModel[]
 }

@@ -3,50 +3,12 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-app-root{
-    background-color: rgba($color: #eeeded, $alpha: 0.4);
-}
 
 .container{
     max-width: 1240px;
     padding: 0 20px;
     width: 100%;
     margin: 0 auto;
-}
-
-.mat-body p, .mat-body-2 p, .mat-typography .mat-body p, .mat-typography .mat-body-2 p, .mat-typography p {
-    margin: 0;
-}
-
-mat-drawer-container{
-    width: 100%;
-}
-// 
-app-root{
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-
-.viewWrapper, app-pokedex, app-home, app-berries, app-games, app-single-pokemon{
-    flex: 1;
-    display: flex;
-    justify-content: center;
-} 
-
-app-single-pokemon{
-    max-width: 1280px;
-    width: 100%;
-    margin: 0 auto;
-}
-
-mat-drawer-content{
-    max-height: calc(100vh - 56px - 87px - 8px);
-}
-
-app-loader{
-    display: contents;
 }
 
 .favourite{
@@ -56,8 +18,3 @@ app-loader{
 .viewWrapper{
     position: relative;
 } 
-
-app-pokedex-filters .mat-expansion-panel-body{
-    display: flex;
-    flex-direction: column;
-}

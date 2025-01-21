@@ -1,4 +1,4 @@
-export class ErrorMessageData{
+export class ErrorMessageDataModel {
     error: string;
     message: string;
 

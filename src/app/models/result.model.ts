@@ -1,4 +1,4 @@
-export class Result {
+export class ResultModel {
     name: string;
     url: string
 

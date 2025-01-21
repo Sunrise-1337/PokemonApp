@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { Result } from 'src/app/models/result';
-import { FilterData } from 'src/app/models/filterData';
+import { ResultModel } from 'src/app/models/result.model';
+import { FilterDataModel } from 'src/app/models/filterData.model';
 
 import {MatCheckboxModule} from '@angular/material/checkbox'
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -22,12 +22,12 @@ import {MatExpansionModule} from '@angular/material/expansion';
   ]
 })
 export class PokedexFiltersComponent implements OnInit{
-  @Input() regionsArray: Result[];
-  @Input() typesArray: Result[];
+  @Input() regionsArray: ResultModel[];
+  @Input() typesArray: ResultModel[];
 
   @Input() initialFilter: string = 'all';
 
-  @Output() newFilterApplied: EventEmitter<FilterData> = new EventEmitter()
+  @Output() newFilterApplied: EventEmitter<FilterDataModel> = new EventEmitter()
 
   activeFilter: string = '';
 
@@ -35,7 +35,7 @@ export class PokedexFiltersComponent implements OnInit{
     this.activeFilter = this.initialFilter
   }
 
-  handleNewFilterValue(sector: string, unit: Result = new Result(sector, '')): void{
+  handleNewFilterValue(sector: string, unit: ResultModel = new ResultModel(sector, '')): void{
     this.activeFilter = unit.name;
 
     this.newFilterApplied.emit({

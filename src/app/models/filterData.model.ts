@@ -1,8 +1,8 @@
-import { Result } from "./result";
+import { ResultModel } from "./result.model";
 
-export class FilterData{
+export class FilterDataModel {
     sector: string;
-    unit: Result;
+    unit: ResultModel;
 
     constructor(sector: string, name: string, url: string) {
         this.sector = sector;

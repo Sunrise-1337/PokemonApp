@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { Result } from '../models/result';
-import { AllResultsResponse } from '../models/all-results-response';
+import { ResultModel } from '../models/result.model';
+import { AllResultsResponseModel } from '../models/all-results-response.model';
 import { ApiService } from './api.service';
 import { Observable, map, switchMap } from 'rxjs';
 import { turnSpeciesLinkIntoRegularPokemonLink } from '../helpers/helper';
@@ -12,12 +12,12 @@ import { PokemonEntry } from '../interfaces/pokedex-response.interface';
 export class ApiRequestsModifierService {
     private apiService = inject(ApiService)
 
-    toGetTypedPokedex(url: string, limit: number = 0, page: number = 0): Observable<AllResultsResponse>{
+    toGetTypedPokedex(url: string, limit: number = 0, page: number = 0): Observable<AllResultsResponseModel>{
         return this.apiService
                 .getTypeByUrl(url)
                 .pipe(
                     map(el => {
-                        let resultArray: Result[] = el.pokemon.map(el => {
+                        let resultArray: ResultModel[] = el.pokemon.map(el => {
                             return el.pokemon
                         }),
                             realCount: number = resultArray.length;
@@ -27,15 +27,15 @@ export class ApiRequestsModifierService {
 
                             limit = (offset + limit) > realCount ? realCount - 1 : offset + limit;
                 
-                            return new AllResultsResponse(realCount, resultArray.slice(offset, limit))
+                            return new AllResultsResponseModel(realCount, resultArray.slice(offset, limit))
                         }
 
-                        return new AllResultsResponse(realCount, resultArray)
+                        return new AllResultsResponseModel(realCount, resultArray)
                     })
                 )
     }
 
-    regionalPokedexLogic(url: string, limit: number = 0, page: number = 0): Observable<AllResultsResponse>{
+    regionalPokedexLogic(url: string, limit: number = 0, page: number = 0): Observable<AllResultsResponseModel>{
         return this.apiService.getSpecificPokedexByUrl(url)
                 .pipe(
                     map(res => {
@@ -43,21 +43,21 @@ export class ApiRequestsModifierService {
 
                         let arrayToBeMapped: PokemonEntry[],
                             offset: number = limit * page,
-                            resultArray: Result[],
+                            resultArray: ResultModel[],
                             realCount: number = pokemon_entries.length;
                         
                         limit = (offset + limit) > realCount ? realCount - 1 : offset + limit;
 
                         arrayToBeMapped = limit ? pokemon_entries.slice(offset, limit) : pokemon_entries;
 
-                        resultArray = arrayToBeMapped.map(res => new Result(res.pokemon_species.name, turnSpeciesLinkIntoRegularPokemonLink(res.pokemon_species.url)))
+                        resultArray = arrayToBeMapped.map(res => new ResultModel(res.pokemon_species.name, turnSpeciesLinkIntoRegularPokemonLink(res.pokemon_species.url)))
 
-                        return new AllResultsResponse(realCount, resultArray)
+                        return new AllResultsResponseModel(realCount, resultArray)
                     })
                 )
     }
 
-    toGetRegionalPokedex(url: string, limit: number = 0, page: number = 0): Observable<AllResultsResponse>{
+    toGetRegionalPokedex(url: string, limit: number = 0, page: number = 0): Observable<AllResultsResponseModel>{
         return this.apiService.getOneRegionByUrl(url)
                 .pipe(
                     switchMap(res => {

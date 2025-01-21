@@ -1,0 +1,22 @@
+app-root{
+    background-color: rgba($color: #eeeded, $alpha: 0.4);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.viewWrapper, app-pokedex, app-home, app-berries, app-games, app-single-pokemon{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+} 
+
+app-single-pokemon{
+    max-width: 1280px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+app-loader{
+    display: contents;
+}

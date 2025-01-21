@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, DestroyRef, Injector, Input, OnInit, Signal, ViewChild, WritableSignal, computed, inject, signal } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { AllResultsResponse } from '../../models/all-results-response';
+import { AllResultsResponseModel } from '../../models/all-results-response.model';
 import { OnePokemonResponse } from '../../interfaces/one-pokemon-response.interface';
 import { MatDrawer, MatDrawerContainer } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,15 +12,15 @@ import { PokedexFiltersComponent } from './pokedex-filters/pokedex-filters.compo
 import { CommonModule } from '@angular/common';
 import { Observable, map, of, take, tap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { PokemonDialogWrapperComponent } from '../../shared/pokemon-dialog-wrapper/pokemon-dialog-wrapper.component';
+import { PokemonDialogWrapperComponent } from '../../shared/components/pokemon-dialog-wrapper/pokemon-dialog-wrapper.component';
 import { FavouritesService } from '../../services/favourites.service';
 import { getIdFromLink, getLinkByTypeAndId, getPokemonLink } from '../../helpers/helper';
-import { Result } from '../../models/result';
-import { FilterData } from '../../models/filterData';
+import { ResultModel } from '../../models/result.model';
+import { FilterDataModel } from '../../models/filterData.model';
 import { ApiRequestsModifierService } from '../../services/apiRequestsModifier.service';
 import { TitleService } from '../../services/title.service';
 import { SubjectsNotificationService } from '../../services/signals-notification.service';
-import { PaginationComponent } from '../../shared/pagination/pagination.component';
+import { PaginationComponent } from '../../shared/components/pagination/pagination.component';
 import { MatButton } from '@angular/material/button';
 
 @Component({
@@ -51,7 +51,7 @@ export class PokedexComponent implements OnInit {
   @ViewChild('pokemonCardDrawer', {static: true}) pokemonCardDrawer: MatDrawer;
 
 
-  resultsResponse: Signal<AllResultsResponse>;
+  resultsResponse: Signal<AllResultsResponseModel>;
   currentPokemon: Signal<OnePokemonResponse | undefined> = signal(undefined);
   currentPokemonUrl: string = '';
   itemsCount: WritableSignal<number>;
@@ -62,8 +62,8 @@ export class PokedexComponent implements OnInit {
   resultsPerPage: WritableSignal<number> = signal(20);
   pagesAmount: Signal<number>;
 
-  regionsArray: Signal<Result[]>;
-  typesArray: Signal<Result[]>;
+  regionsArray: Signal<ResultModel[]>;
+  typesArray: Signal<ResultModel[]>;
 
 
   private injector = inject(Injector);
@@ -107,7 +107,7 @@ export class PokedexComponent implements OnInit {
     }
 
     if (!this.filterSector) {
-      this.handleNewFilterApplication(new FilterData('all', '', ''))
+      this.handleNewFilterApplication(new FilterDataModel('all', '', ''))
     } else {
       this.setCurrentPage(this.startPage - 1)
     }
@@ -175,7 +175,7 @@ export class PokedexComponent implements OnInit {
     });
   }
 
-  toChangeFiltersQuery(data: FilterData): void{
+  toChangeFiltersQuery(data: FilterDataModel): void{
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       queryParams: { 
@@ -187,7 +187,7 @@ export class PokedexComponent implements OnInit {
     });
   }
   
-  handleNewFilterApplication(data: FilterData, firstCall: boolean = false): void{
+  handleNewFilterApplication(data: FilterDataModel, firstCall: boolean = false): void{
     if (!firstCall) this.signalsStoreService.pageToBeOpenedOnInit.set(1)
 
     this.toChangeFiltersQuery(data)
@@ -223,7 +223,7 @@ export class PokedexComponent implements OnInit {
     }
   }
 
-  toSetResultsResponseFromObservable(observableToSet: Observable<AllResultsResponse>): void{
+  toSetResultsResponseFromObservable(observableToSet: Observable<AllResultsResponseModel>): void{
     this.resultsResponse = toSignal(
       observableToSet
         .pipe(

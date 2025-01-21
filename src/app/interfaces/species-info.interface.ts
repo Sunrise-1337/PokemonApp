@@ -1,20 +1,20 @@
-import { Result } from "../models/result"
+import { ResultModel } from "../models/result.model"
 
 export interface SpeciesInfo {
     base_happiness: number
     capture_rate: number
-    color: Result
-    egg_groups: Result[]
+    color: ResultModel
+    egg_groups: ResultModel[]
     evolution_chain: EvolutionChainUrl
-    evolves_from_species: Result
+    evolves_from_species: ResultModel
     flavor_text_entries: FlavorTextEntry[]
     form_descriptions: any[]
     forms_switchable: boolean
     gender_rate: number
     genera: Genera[]
-    generation: Result
-    growth_rate: Result
-    habitat: Result
+    generation: ResultModel
+    growth_rate: ResultModel
+    habitat: ResultModel
     has_gender_differences: boolean
     hatch_counter: number
     id: number
@@ -26,7 +26,7 @@ export interface SpeciesInfo {
     order: number
     pal_park_encounters: PalParkEncounter[]
     pokedex_numbers: PokedexNumber[]
-    shape: Result
+    shape: ResultModel
     varieties: Variety[]
   }
   
@@ -36,33 +36,33 @@ export interface SpeciesInfo {
   
   export interface FlavorTextEntry {
     flavor_text: string
-    language: Result
-    version: Result
+    language: ResultModel
+    version: ResultModel
   }
   
   export interface Genera {
     genus: string
-    language: Result
+    language: ResultModel
   }
   
   export interface Name {
-    language: Result
+    language: ResultModel
     name: string
   }
   
   export interface PalParkEncounter {
-    area: Result
+    area: ResultModel
     base_score: number
     rate: number
   }
   
   export interface PokedexNumber {
     entry_number: number
-    pokedex: Result
+    pokedex: ResultModel
   }
 
   export interface Variety {
     is_default: boolean
-    pokemon: Result
+    pokemon: ResultModel
   }
   

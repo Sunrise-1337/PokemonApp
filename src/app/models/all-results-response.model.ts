@@ -1,12 +1,12 @@
-import { Result } from "./result"
+import { ResultModel } from "./result.model"
 
-export class AllResultsResponse {
+export class AllResultsResponseModel {
     count: number;
     next?: string | null;
     previous?: string | null;
-    results: Result[];
+    results: ResultModel[];
 
-    constructor(count: number, results: Result[]) {
+    constructor(count: number, results: ResultModel[]) {
         this.count = count;
         this.results = JSON.parse(JSON.stringify(results));
     }

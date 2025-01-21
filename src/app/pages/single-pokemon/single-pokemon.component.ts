@@ -9,9 +9,9 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { EvolutionChain, SingleEvolution } from '../../interfaces/evolution-chain.interface';
 import { map, switchMap, take, tap } from 'rxjs';
-import { Result } from '../../models/result';
+import { ResultModel } from '../../models/result.model';
 import { recursiveResultArray } from '../../interfaces/types.interface';
-import { PokemonDialogWrapperComponent } from '../../shared/pokemon-dialog-wrapper/pokemon-dialog-wrapper.component';
+import { PokemonDialogWrapperComponent } from '../../shared/components/pokemon-dialog-wrapper/pokemon-dialog-wrapper.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FavouritesService } from '../../services/favourites.service';
 import { SubjectsNotificationService } from '../../services/signals-notification.service';
@@ -21,6 +21,8 @@ import { MatCard, MatCardTitle, MatCardSubtitle} from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButton } from '@angular/material/button';
+import { RoutesMetaTagsService } from 'src/app/services/routes-meta-tags.service';
+import { RoutesMetaDataConstants } from 'src/app/constants/routes-meta-data.constants';
 
 @Component({
   standalone: true,
@@ -38,7 +40,7 @@ import { MatButton } from '@angular/material/button';
     GetTypesStringPipe,
     MatButton,
     TitleCasePipe,
-]
+  ]
 })
 
 export class SinglePokemonComponent implements OnInit{
@@ -55,11 +57,12 @@ export class SinglePokemonComponent implements OnInit{
   private subjectsNotificationService = inject(SubjectsNotificationService)
   private cdRef = inject(ChangeDetectorRef)
   private titleService = inject(TitleService)
+  private metaTagsService = inject(RoutesMetaTagsService)
   private titleCasePipe = inject(TitleCasePipe)
 
 
   pokemonModel: Signal<OnePokemonResponse | undefined> = this.signalsStoreService.pokemonSignal;
-  evolutionArray: Signal<Result[] | undefined>;
+  evolutionArray: Signal<ResultModel[] | undefined>;
   id: string;
 
   ngOnInit(): void {
@@ -70,6 +73,13 @@ export class SinglePokemonComponent implements OnInit{
     this.titleService.toSetPokemonNameTitle(
       this.titleCasePipe.transform(name)
     )
+  }
+
+  toSetPageMetaTags(pokemonData: OnePokemonResponse): void{
+    const {description, keywords} = RoutesMetaDataConstants.pokemon
+
+    this.metaTagsService.updateDescription(pokemonData.name + description)
+    this.metaTagsService.updateKeywords(pokemonData.name + keywords + pokemonData.types.join())
   }
   
   toSetSubsciptions(): void{
@@ -103,6 +113,7 @@ export class SinglePokemonComponent implements OnInit{
           .pipe(
             tap(res => {
               this.toSetPageTitle(res.name)
+              this.toSetPageMetaTags(res)
             })
           ), {
         initialValue: undefined,
@@ -110,6 +121,10 @@ export class SinglePokemonComponent implements OnInit{
       })
     } else {
       this.toSetPageTitle(this.pokemonModel()?.name as string)
+      
+      if (this.pokemonModel()) {
+        this.toSetPageMetaTags(this.pokemonModel() as OnePokemonResponse)
+      }
     }
     
     this.evolutionArray = toSignal(
@@ -121,7 +136,7 @@ export class SinglePokemonComponent implements OnInit{
           map((res: EvolutionChain) => {
               return (
                 res?.chain
-                    ? this.getRecursiveEvolutionValue([res.chain]) as Result[]
+                    ? this.getRecursiveEvolutionValue([res.chain]) as ResultModel[]
                     : []
               )
           })
@@ -152,7 +167,7 @@ export class SinglePokemonComponent implements OnInit{
     // If on this level of evolution we only have one form we will push it to the resultsArray
     // Otherwise we will push the array of forms to which current form of pokemon can proceed
     if (evolution.length > 1) {
-      let sameLevelForms: Result[] = evolution.reduce((acc: Result[], res) => {
+      let sameLevelForms: ResultModel[] = evolution.reduce((acc: ResultModel[], res) => {
         return [...acc, res.species]
       }, [])
       

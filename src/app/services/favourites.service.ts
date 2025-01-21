@@ -1,10 +1,10 @@
 import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { OnePokemonResponse } from '../interfaces/one-pokemon-response.interface';
-import { Result } from '../models/result';
-import { ResponseToUnit } from '../models/responseToUnit';
+import { ResultModel } from '../models/result.model';
+import { ResponseToUnitModel } from '../models/responseToUnit.model';
 import { SnackbarService } from './snackbar.service';
 import { map, take } from 'rxjs';
-import { AllResultsResponse } from '../models/all-results-response';
+import { AllResultsResponseModel } from '../models/all-results-response.model';
 import { SubjectsNotificationService } from './signals-notification.service';
 import { isPlatformServer } from '@angular/common';
 
@@ -12,7 +12,7 @@ import { isPlatformServer } from '@angular/common';
   providedIn: 'root'
 })
 export class FavouritesService {
-  favouritesList: Result[] = [];
+  favouritesList: ResultModel[] = [];
   storageKey = 'favouritesList';
 
   private snackbarService = inject(SnackbarService)
@@ -22,14 +22,14 @@ export class FavouritesService {
   toInitList(): void{
     if (isPlatformServer(this.platformId)) return
 
-    const storageData: Result[] = JSON.parse(localStorage.getItem(this.storageKey) as string)
+    const storageData: ResultModel[] = JSON.parse(localStorage.getItem(this.storageKey) as string)
 
     if (storageData) {
       this.favouritesList = storageData;
     }
   }
 
-  toggleFavs(unit: Result): void{
+  toggleFavs(unit: ResultModel): void{
     let toAdd = this.toggleLogic(unit)
 
     this.snackbarService.toOpenFavStatus(unit, toAdd)
@@ -46,7 +46,7 @@ export class FavouritesService {
       })
   }
 
-  toggleLogic(unit: Result): boolean{
+  toggleLogic(unit: ResultModel): boolean{
     let toAdd;
 
     if (this.isFav(unit.name)) {
@@ -63,19 +63,19 @@ export class FavouritesService {
   }
 
   toggleFavsByResponse(unit: OnePokemonResponse): void{
-    this.toggleFavs(new ResponseToUnit(unit))
+    this.toggleFavs(new ResponseToUnitModel(unit))
   }
 
-  getFavsList(amount: number = 0, page: number = 0): AllResultsResponse{
+  getFavsList(amount: number = 0, page: number = 0): AllResultsResponseModel{
     const offset = amount * page,
           realCount = this.favouritesList.length;
 
     let limit = (offset + amount) > realCount ? realCount : amount;
 
     console.log(offset, limit)
-    console.log(new AllResultsResponse(realCount, limit ? this.favouritesList.slice(offset, limit) : this.favouritesList))
+    console.log(new AllResultsResponseModel(realCount, limit ? this.favouritesList.slice(offset, limit) : this.favouritesList))
 
-    return new AllResultsResponse(realCount, limit ? this.favouritesList.slice(offset, limit) : this.favouritesList)
+    return new AllResultsResponseModel(realCount, limit ? this.favouritesList.slice(offset, limit) : this.favouritesList)
   }
 
   isFav(unitName: string): boolean{

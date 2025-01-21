@@ -1,4 +1,4 @@
-import { Result } from "../models/result"
+import { ResultModel } from "../models/result.model"
 
 export interface PokedexResponse{
     id: number
@@ -9,6 +9,6 @@ export interface PokedexResponse{
 
 export interface PokemonEntry {
     entry_number: number
-    pokemon_species: Result
+    pokemon_species: ResultModel
 }
   

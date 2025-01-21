@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { OnePokemonResponse } from '../interfaces/one-pokemon-response.interface';
-import { AllResultsResponse } from '../models/all-results-response';
+import { AllResultsResponseModel } from '../models/all-results-response.model';
 import { SpeciesInfo } from '../interfaces/species-info.interface';
 import { EvolutionChain } from '../interfaces/evolution-chain.interface';
 import { base__url, sublinks } from '../constants/api.constants';
@@ -18,9 +18,9 @@ export class ApiService {
 
   private http = inject(HttpClient)
 
-  getAllPokemons(amount: number = 0, page: number = 0): Observable<AllResultsResponse>{
+  getAllPokemons(amount: number = 0, page: number = 0): Observable<AllResultsResponseModel>{
     const params = amount ? `?offset=${amount * page}&limit=${amount}` : ''
-    return this.http.get<AllResultsResponse>(base__url + sublinks.pokemon + params)
+    return this.http.get<AllResultsResponseModel>(base__url + sublinks.pokemon + params)
   }
 
   getSpecificPokedexByUrl(url: string): Observable<PokedexResponse>{
@@ -55,8 +55,8 @@ export class ApiService {
   }
 
 
-  getAllRegions(): Observable<AllResultsResponse>{
-    return this.http.get<AllResultsResponse>(base__url + sublinks.region)
+  getAllRegions(): Observable<AllResultsResponseModel>{
+    return this.http.get<AllResultsResponseModel>(base__url + sublinks.region)
   }
 
   getOneRegionByUrl(url: string): Observable<Region>{
@@ -68,15 +68,15 @@ export class ApiService {
     return this.http.get<TypeResponse>(url)
   }
 
-  getAllTypes(): Observable<AllResultsResponse>{
-    return this.http.get<AllResultsResponse>(base__url + sublinks.type)
+  getAllTypes(): Observable<AllResultsResponseModel>{
+    return this.http.get<AllResultsResponseModel>(base__url + sublinks.type)
   }
 
 
 
-  getAllBerries(amount: number = 0, page: number = 0): Observable<AllResultsResponse>{
+  getAllBerries(amount: number = 0, page: number = 0): Observable<AllResultsResponseModel>{
     const params = amount ? `?offset=${amount * page}&limit=${amount}` : ''
-    return this.http.get<AllResultsResponse>(base__url + sublinks.berries + params)
+    return this.http.get<AllResultsResponseModel>(base__url + sublinks.berries + params)
   }
 
   getOneBerry(id: number): Observable<null>{

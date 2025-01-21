@@ -1,6 +1,6 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ErrorMessageData } from 'src/app/models/error-message-data';
+import { ErrorMessageDataModel } from 'src/app/models/error-message-data.model';
 import { MatButton } from '@angular/material/button';
 
 @Component({
@@ -11,7 +11,7 @@ import { MatButton } from '@angular/material/button';
     imports: [MatButton]
 })
 export class ErrorMessageComponent {
-  public data: ErrorMessageData = inject(MAT_DIALOG_DATA);
+  public data: ErrorMessageDataModel = inject(MAT_DIALOG_DATA);
   private dialogRef = inject(MatDialogRef<ErrorMessageComponent>)
 
   closeDialog(): void{

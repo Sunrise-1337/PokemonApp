@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
-import { FavStatusSnackbarComponent } from '../shared/fav-status-snackbar/fav-status-snackbar.component';
+import { FavStatusSnackbarComponent } from '../shared/components/fav-status-snackbar/fav-status-snackbar.component';
 import { MatSnackBar, MatSnackBarDismiss } from '@angular/material/snack-bar';
 import { TitleCasePipe } from '@angular/common';
-import { Result } from '../models/result';
+import { ResultModel } from '../models/result.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class SnackbarService {
 
   constructor() { }
 
-  toOpenFavStatus(unit: Result, toAdd: boolean): Observable<MatSnackBarDismiss>{
+  toOpenFavStatus(unit: ResultModel, toAdd: boolean): Observable<MatSnackBarDismiss>{
     this.snackBar.dismiss()
 
     let snackBarRef = this.snackBar.openFromComponent(
