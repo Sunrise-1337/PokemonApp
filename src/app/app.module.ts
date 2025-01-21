@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FavStatusSnackbarComponent } from './shared/fav-status-snackbar/fav-status-snackbar.component';
 import { TitleCasePipe } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { AppRoutingModule, routes } from './app-routing.module';
@@ -22,44 +22,38 @@ import { ErrorMessageComponent } from './shared/error-message/error-message.comp
 import { FavouritesService } from './services/favourites.service';
 
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    FooterComponent,
-    HomeComponent,
-    LoaderComponent,
-    FavStatusSnackbarComponent,
-    ErrorMessageComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    SharedModule,
-    TitleCasePipe
-  ],
-  providers: [
-    provideRouter(routes, withComponentInputBinding()),      
-    {
-      provide: APP_INITIALIZER, 
-      useFactory: (favouritesService: FavouritesService) => () => favouritesService.toInitList(),
-      deps: [FavouritesService],
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS, 
-      useClass: ErrorHandlingInterceptorService, 
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS, 
-      useClass: LoaderInterceptorService, 
-      multi: true
-    },
-    TitleCasePipe
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HeaderComponent,
+        FooterComponent,
+        HomeComponent,
+        LoaderComponent,
+        FavStatusSnackbarComponent,
+        ErrorMessageComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        SharedModule,
+        TitleCasePipe], providers: [
+        provideRouter(routes, withComponentInputBinding()),
+        {
+            provide: APP_INITIALIZER,
+            useFactory: (favouritesService: FavouritesService) => () => favouritesService.toInitList(),
+            deps: [FavouritesService],
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ErrorHandlingInterceptorService,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: LoaderInterceptorService,
+            multi: true
+        },
+        TitleCasePipe,
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule { }
