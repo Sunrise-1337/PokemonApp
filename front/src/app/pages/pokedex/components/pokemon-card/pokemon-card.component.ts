@@ -2,9 +2,16 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, Signal } from '@angular/core';
 import { OnePokemonResponse } from 'src/app/interfaces/one-pokemon-response.interface'
 
-import { GetTypesStringPipe } from '../../pipes/getTypesString.pipe';
+import { GetTypesStringPipe } from '../../pipes/get-types-string.pipe';
 import { RouterModule } from '@angular/router';
-import { MatCard, MatCardActions, MatCardContent, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardImage,
+  MatCardSubtitle,
+  MatCardTitle
+} from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton } from '@angular/material/button';
 
@@ -24,8 +31,9 @@ import { MatButton } from '@angular/material/button';
     MatCardActions,
     MatCardContent,
     MatButton,
-    GetTypesStringPipe
-]
+    GetTypesStringPipe,
+    MatCardImage
+  ]
 })
 export class PokemonCardComponent{
   @Input() pokemonModel: OnePokemonResponse;
@@ -35,7 +43,7 @@ export class PokemonCardComponent{
 
   isShiny: boolean = false;
 
-  
+
   onGoneToFullPage(): void{
     this.isGoneToFullPage.emit(true)
   }

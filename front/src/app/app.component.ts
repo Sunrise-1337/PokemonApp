@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { LoaderComponent } from './shared/components/loader/loader.component';
@@ -14,7 +14,7 @@ import { RoutesMetaTagsService } from './services/routes-meta-tags.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [HeaderComponent, RouterOutlet, LoaderComponent, FooterComponent]
 })
-export class AppComponent{
+export class AppComponent implements OnInit{
     private router = inject(Router)
     private activatedRoute = inject(ActivatedRoute)
     private routMeta = inject(RoutesMetaTagsService)

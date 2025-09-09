@@ -22,6 +22,7 @@ import { TitleService } from '../../services/title.service';
 import { SubjectsNotificationService } from '../../services/signals-notification.service';
 import { PaginationComponent } from '../../shared/components/pagination/pagination.component';
 import { MatButton } from '@angular/material/button';
+import {IsPokemonFavouritePipe} from "../../shared/pipes/is-pokemon-favourite.pipe";
 
 @Component({
   standalone: true,
@@ -36,7 +37,8 @@ import { MatButton } from '@angular/material/button';
     PaginationComponent,
     MatDrawer,
     MatDrawerContainer,
-    MatButton
+    MatButton,
+    IsPokemonFavouritePipe
   ]
 })
 export class PokedexComponent implements OnInit {
@@ -56,8 +58,6 @@ export class PokedexComponent implements OnInit {
   currentPokemon: Signal<OnePokemonResponse | undefined> = signal(undefined);
   currentPokemonUrl: string = '';
   itemsCount: WritableSignal<number>;
-
-  currentid: string;
 
   currentPage: number;
   resultsPerPage: WritableSignal<number> = signal(20);
@@ -95,7 +95,6 @@ export class PokedexComponent implements OnInit {
       )
       .subscribe(res => {
         this.cdRef.detectChanges()
-        console.log('marking for checking')
       })
   }
 
@@ -116,31 +115,31 @@ export class PokedexComponent implements OnInit {
     this.signalsStoreService.pageToBeOpenedOnInit.set(+this.startPage)
 
     if (this.limit) this.resultsPerPage = signal(+this.limit)
-    
+
     this.toSetResultsResponseFromObservable(this.apiService.getAllPokemons(this.resultsPerPage(), this.startPage ? this.startPage - 1 : 0));
 
     this.pagesAmount = computed(() => {
       return Math.ceil(this.itemsCount() / this.resultsPerPage())
     })
 
-    this.regionsArray = toSignal(this.apiService.getAllRegions().pipe(map(res => res.results)), 
+    this.regionsArray = toSignal(this.apiService.getAllRegions().pipe(map(res => res.results)),
     {
       initialValue: [],
       injector: this.injector,
     });
 
-    
-    this.typesArray = toSignal(this.apiService.getAllTypes().pipe(map(res => res.results)), 
+
+    this.typesArray = toSignal(this.apiService.getAllTypes().pipe(map(res => res.results)),
     {
       initialValue: [],
       injector: this.injector,
     });
   }
 
-  setCurrentPage(page: number): void{
+  protected setCurrentPage(page: number): void{
     if (+this.startPage === page) return
 
-    this.currentPage = page 
+    this.currentPage = page
 
     this.router.navigate([`../${page}`], {
       relativeTo: this.activatedRoute,
@@ -152,7 +151,7 @@ export class PokedexComponent implements OnInit {
     this.toSetDisplayByType(this.filterSector, getLinkByTypeAndId(this.filterSector, this.filterId), this.currentPage - 1)
   }
 
-  onPokemonChoice(url: string): void{
+  protected onPokemonChoice(url: string): void{
     if (this.currentPokemonUrl === url) {
       this.dialogRef.closeAll()
       this.pokemonCardDrawer.close()
@@ -166,29 +165,29 @@ export class PokedexComponent implements OnInit {
     this.toAssignCurrentPokemon(this.apiService.getOnePokemonByUrl(url))
   }
 
-  toChangePokemonQuery(url: string = ''): void{
+  private toChangePokemonQuery(url: string = ''): void{
     this.router.navigate([], {
         relativeTo: this.activatedRoute,
-        queryParams: { 
+        queryParams: {
           pokemon: url ? url.split('pokemon/')[1].replace('/', '') : ''
-        }, 
+        },
         queryParamsHandling: 'merge'
     });
   }
 
-  toChangeFiltersQuery(data: FilterDataModel): void{
+  private toChangeFiltersQuery(data: FilterDataModel): void{
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
-      queryParams: { 
+      queryParams: {
         filter: data.unit.name,
         filterSector: data.sector,
         filterId: data.sector !== 'all' && data.sector !== 'favourites' ? getIdFromLink(data.unit.url, data.sector) : ''
-      }, 
+      },
       queryParamsHandling: 'merge'
     });
   }
-  
-  handleNewFilterApplication(data: FilterDataModel, firstCall: boolean = false): void{
+
+  protected handleNewFilterApplication(data: FilterDataModel, firstCall: boolean = false): void{
     if (!firstCall) this.signalsStoreService.pageToBeOpenedOnInit.set(1)
 
     this.toChangeFiltersQuery(data)
@@ -196,27 +195,27 @@ export class PokedexComponent implements OnInit {
     this.toSetDisplayByType(data.sector, data.unit.url, this.startPage ? this.startPage - 1 : 0)
   }
 
-  toSetDisplayByType(sector: string, url: string, page: number){
+  private toSetDisplayByType(sector: string, url: string, page: number){
     switch (sector) {
-      case 'all':     
+      case 'all':
         this.toSetResultsResponseFromObservable(
           this.apiService.getAllPokemons(this.resultsPerPage(), page)
         );
         break;
-      
-      case 'favourites': 
+
+      case 'favourites':
         this.toSetResultsResponseFromObservable(
           of(this.favsService.getFavsList(this.resultsPerPage(), page))
         );
         break;
-      
-      case 'region': 
+
+      case 'region':
         this.toSetResultsResponseFromObservable(
           this.apiModifier.toGetRegionalPokedex(url, this.resultsPerPage(), page)
         )
         break;
 
-      case 'type': 
+      case 'type':
         this.toSetResultsResponseFromObservable(
           this.apiModifier.toGetTypedPokedex(url, this.resultsPerPage(), page)
         );
@@ -224,14 +223,14 @@ export class PokedexComponent implements OnInit {
     }
   }
 
-  toSetResultsResponseFromObservable(observableToSet: Observable<AllResultsResponseModel>): void{
+  private toSetResultsResponseFromObservable(observableToSet: Observable<AllResultsResponseModel>): void{
     this.resultsResponse = toSignal(
       observableToSet
         .pipe(
           tap(res => {
             this.itemsCount.set(res.count)
           })
-        ), 
+        ),
       {
         initialValue: {count: 0, results: []},
         injector: this.injector,
@@ -239,7 +238,7 @@ export class PokedexComponent implements OnInit {
     );
   }
 
-  toAssignCurrentPokemon(receivedObservable: Observable<OnePokemonResponse>): void{
+  private toAssignCurrentPokemon(receivedObservable: Observable<OnePokemonResponse>): void{
     this.currentPokemon = toSignal<OnePokemonResponse>(
       receivedObservable
         .pipe(
@@ -247,7 +246,7 @@ export class PokedexComponent implements OnInit {
             this.toOpenPokemonCard(res);
             this.currentPokemonUrl = getPokemonLink(res.id)
           })
-        ), 
+        ),
       {
         initialValue: undefined,
         injector: this.injector,
@@ -255,7 +254,7 @@ export class PokedexComponent implements OnInit {
     )
   }
 
-  toOpenPokemonCard(data: OnePokemonResponse): void{
+  private toOpenPokemonCard(data: OnePokemonResponse): void{
     if (window && window.innerWidth > 1440) {
       this.pokemonCardDrawer.open()
       this.signalsStoreService.pokemonSignal.set(data)
@@ -282,11 +281,7 @@ export class PokedexComponent implements OnInit {
     }
   }
 
-  handleFavToggle(): void{
+  protected handleFavToggle(): void{
     this.favsService.toggleFavsByResponse(this.currentPokemon() as OnePokemonResponse)
-  }
-
-  isFav(name: string): boolean{
-    return this.favsService.isFav(name)
   }
 }

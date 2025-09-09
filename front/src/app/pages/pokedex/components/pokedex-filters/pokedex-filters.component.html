@@ -1,15 +1,17 @@
 <div class="filters">
   <mat-checkbox class="filters__checkbox"
-    [checked]="isFilterActive('all')"
-    [disabled]="isFilterActive('all')"
-  (click)="handleNewFilterValue('all')">All Pokemons</mat-checkbox>
+                [checked]="isFilterActive('all')"
+                [disabled]="isFilterActive('all')"
+                (click)="handleNewFilterValue('all')">All Pokemons</mat-checkbox>
+
   @if (regionsArray) {
     <mat-accordion class="filters__accordion">
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title class="filters__title">Regions</mat-panel-title>
         </mat-expansion-panel-header>
-        @for (region of regionsArray; track region.url; let index = $index) {
+
+        @for (region of regionsArray; track region.url) {
           <mat-checkbox
             [checked]="isFilterActive(region.name)"
             [disabled]="isFilterActive(region.name)"
@@ -20,13 +22,15 @@
       </mat-expansion-panel>
     </mat-accordion>
   }
+
   @if (typesArray) {
     <mat-accordion class="single__evolutions">
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>Types</mat-panel-title>
         </mat-expansion-panel-header>
-        @for (type of typesArray; track type.url; let index = $index) {
+
+        @for (type of typesArray; track type.url) {
           <mat-checkbox
             [checked]="type.name === activeFilter"
             [disabled]="isFilterActive(type.name)"
@@ -37,8 +41,9 @@
       </mat-expansion-panel>
     </mat-accordion>
   }
+
   <mat-checkbox class="filters__checkbox"
-    [checked]="activeFilter === 'favourites'"
-    [disabled]="isFilterActive('favourites')"
-  (click)="handleNewFilterValue('favourites')">Favourites</mat-checkbox>
+                [checked]="activeFilter === 'favourites'"
+                [disabled]="isFilterActive('favourites')"
+                (click)="handleNewFilterValue('favourites')">Favourites</mat-checkbox>
 </div>

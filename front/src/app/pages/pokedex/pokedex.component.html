@@ -1,5 +1,5 @@
 <mat-drawer-container class="pokedex" autosize>
-  <mat-drawer #filters opened class="pokedex__filters" mode="side">
+  <mat-drawer opened class="pokedex__filters" mode="side">
     <app-pokedex-filters [regionsArray]="regionsArray()"
       [typesArray]="typesArray()"
       [initialFilter]="filter"
@@ -12,7 +12,7 @@
         <div class="pokedex__pokemon-wrap">
           @for (pokemon of pokemons; track pokemon.url) {
             <button mat-raised-button
-              (click)="onPokemonChoice(pokemon.url)" [ngClass]="{'favourite': isFav(pokemon.name)}">
+              (click)="onPokemonChoice(pokemon.url)" [ngClass]="{'favourite': pokemon.name | isPokemonFavourite}">
               {{pokemon.name | titlecase}}
             </button>
           }
@@ -29,15 +29,8 @@
   <mat-drawer #pokemonCardDrawer class="pokedex__inspect" mode="side" position="end">
     @if (currentPokemon(); as currentPokemon) {
       <app-pokemon-card [pokemonModel]="currentPokemon"
-        [isFavorite]="isFav(currentPokemon.name)"
-      (favWasToggled)="handleFavToggle()"></app-pokemon-card>
+                        [isFavorite]="currentPokemon.name | isPokemonFavourite"
+                        (favWasToggled)="handleFavToggle()"></app-pokemon-card>
     }
   </mat-drawer>
 </mat-drawer-container>
-
-
-<ng-template #noRes>
-  <div class="pokedex__noRes">
-    No results
-  </div>
-</ng-template>

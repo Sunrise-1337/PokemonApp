@@ -4,7 +4,7 @@ import { ApiService } from '../../services/api.service';
 import { OnePokemonResponse } from '../../interfaces/one-pokemon-response.interface';
 import { CommonModule } from '@angular/common';
 
-import { GetTypesStringPipe } from '../pokedex/pipes/getTypesString.pipe';
+import { GetTypesStringPipe } from '../pokedex/pipes/get-types-string.pipe';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { EvolutionChain, SingleEvolution } from '../../interfaces/evolution-chain.interface';
@@ -17,12 +17,13 @@ import { FavouritesService } from '../../services/favourites.service';
 import { SubjectsNotificationService } from '../../services/signals-notification.service';
 import { TitleService } from '../../services/title.service';
 import { TitleCasePipe } from '@angular/common';
-import { MatCard, MatCardTitle, MatCardSubtitle} from '@angular/material/card';
+import {MatCard, MatCardTitle, MatCardSubtitle, MatCardImage} from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButton } from '@angular/material/button';
 import { RoutesMetaTagsService } from 'src/app/services/routes-meta-tags.service';
 import { RoutesMetaDataConstants } from 'src/app/constants/routes-meta-data.constants';
+import {IsArrayPipe} from "./pipes/is-array.pipe";
 
 @Component({
   standalone: true,
@@ -41,6 +42,8 @@ import { RoutesMetaDataConstants } from 'src/app/constants/routes-meta-data.cons
     GetTypesStringPipe,
     MatButton,
     TitleCasePipe,
+    MatCardImage,
+    IsArrayPipe,
   ]
 })
 
@@ -82,7 +85,7 @@ export class SinglePokemonComponent implements OnInit{
     this.metaTagsService.updateDescription(pokemonData.name + description)
     this.metaTagsService.updateKeywords(pokemonData.name + keywords + pokemonData.types.join())
   }
-  
+
   toSetSubsciptions(): void{
     this.actRoute.params
       .pipe(
@@ -102,7 +105,6 @@ export class SinglePokemonComponent implements OnInit{
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(res => {
-        console.log('updateViewNotificationSignal')
         this.cdRef.detectChanges()
       })
   }
@@ -122,16 +124,16 @@ export class SinglePokemonComponent implements OnInit{
       })
     } else {
       this.toSetPageTitle(this.pokemonModel()?.name as string)
-      
+
       if (this.pokemonModel()) {
         this.toSetPageMetaTags(this.pokemonModel() as OnePokemonResponse)
       }
     }
-    
+
     this.evolutionArray = toSignal(
       this.api.getSpeciesInfo(this.id)
         .pipe(
-          switchMap(res => { 
+          switchMap(res => {
             return this.api.getEvolutionChainByUrl(res.evolution_chain.url)
           }),
           map((res: EvolutionChain) => {
@@ -157,7 +159,7 @@ export class SinglePokemonComponent implements OnInit{
     if (!evolution) return
 
     // If it is the first call we will assign the value of the first argument
-    // If it's not then we will assign the value of second argument, which contains 
+    // If it's not then we will assign the value of second argument, which contains
     // results of the previous calls
     let resultsArray: recursiveResultArray = [];
 
@@ -171,7 +173,7 @@ export class SinglePokemonComponent implements OnInit{
       let sameLevelForms: ResultModel[] = evolution.reduce((acc: ResultModel[], res) => {
         return [...acc, res.species]
       }, [])
-      
+
       resultsArray.push(sameLevelForms)
     } else {
       evolution.forEach(res => {
@@ -180,11 +182,11 @@ export class SinglePokemonComponent implements OnInit{
     }
 
     // Here we check if the evolution has next form
-    // If we have more than 1 element in the array and there are next forms we will add 
+    // If we have more than 1 element in the array and there are next forms we will add
     // to this array more arrays (1 for each form)
 
     // I check only if the first element has next evolutions since all evolution chains
-    // have the same length the forms since 
+    // have the same length the forms since
     if (evolution[0]?.evolves_to) {
       let evolutionArray: SingleEvolution[] = [];
 
@@ -196,13 +198,13 @@ export class SinglePokemonComponent implements OnInit{
         // sameLevelForms.forEach(res => {
         //   return this.getRecursiveEvolutionValue(evolution, sameLevelForms)
         // })
-        
+
         // resultsArray.push(sameLevelForms)
         evolution.forEach(res => {
           evolutionArray = evolutionArray.concat(res.evolves_to as SingleEvolution[])
         })
       } else {
-        if (this.isArray(evolution[0].evolves_to)) {
+        if (Array.isArray(evolution[0].evolves_to)) {
           evolutionArray = evolutionArray.concat(evolution[0].evolves_to)
         }
       }
@@ -229,20 +231,11 @@ export class SinglePokemonComponent implements OnInit{
       })
   }
 
-  isArray(arg: any): boolean{
-    return Array.isArray(arg)
-  }
-  
-  toggleShiny(): void{
+  protected toggleShiny(): void{
     this.isShiny = !this.isShiny
   }
-  
-  toggleFav(): void {
+
+  protected toggleFav(): void {
     this.favsService.toggleFavsByResponse(this.pokemonModel() as OnePokemonResponse)
   }
-
-  isFav(name:string): boolean{
-    return this.favsService.isFav(name)
-  }
-
 }

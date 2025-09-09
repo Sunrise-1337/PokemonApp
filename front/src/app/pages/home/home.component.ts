@@ -15,13 +15,6 @@ import { MatCard, MatCardImage, MatCardContent } from '@angular/material/card';
     imports: [NgTemplateOutlet, RouterLink, MatCard, MatCardImage, MatCardContent]
 })
 export class HomeComponent implements OnInit {
-  private titleService = inject(TitleService);
-
-  ngOnInit() {
-    this.titleService.toSetAppNameTitle()
-  }
-
-
   cards: HomeCard[] = [
     {
       name: "Pokedex",
@@ -40,4 +33,9 @@ export class HomeComponent implements OnInit {
     }
   ]
 
+  private titleService = inject(TitleService);
+
+  ngOnInit() {
+    this.titleService.toSetAppNameTitle()
+  }
 }
