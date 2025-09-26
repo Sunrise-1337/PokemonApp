@@ -43,7 +43,7 @@ import {IsPokemonFavouritePipe} from "../../shared/pipes/is-pokemon-favourite.pi
 })
 export class PokedexComponent implements OnInit {
   @Input('pokemon') pokeId?: string;
-  @Input('id') startPage: number;
+  @Input('id') startPage: number = 1;
 
   @Input() filter: string;
   @Input() filterId: string;
@@ -109,14 +109,21 @@ export class PokedexComponent implements OnInit {
     if (!this.filterSector) {
       this.handleNewFilterApplication(new FilterDataModel('all', '', ''))
     } else {
-      this.setCurrentPage(this.startPage - 1)
+      this.setCurrentPage(
+        Math.max(this.startPage - 1, 1)
+      )
     }
 
     this.signalsStoreService.pageToBeOpenedOnInit.set(+this.startPage)
 
     if (this.limit) this.resultsPerPage = signal(+this.limit)
 
-    this.toSetResultsResponseFromObservable(this.apiService.getAllPokemons(this.resultsPerPage(), this.startPage ? this.startPage - 1 : 0));
+    this.toSetResultsResponseFromObservable(
+      this.apiService.getAllPokemons(
+        this.resultsPerPage(),
+        Math.max(this.startPage - 1, 0)
+      )
+    );
 
     this.pagesAmount = computed(() => {
       return Math.ceil(this.itemsCount() / this.resultsPerPage())

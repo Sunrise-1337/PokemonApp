@@ -7,15 +7,15 @@ import { Title } from '@angular/platform-browser';
 export class TitleService {
 
   private titleService = inject(Title);
-  
+
   toSetPokedexPageTitle(page: number = 1): void{
-    this.titleService.setTitle(`Page ${page} | Pokedex`)
+    this.titleService.setTitle(`Page ${page ?? 1} | Pokedex`)
   }
 
   toSetAppNameTitle(): void{
     this.titleService.setTitle('PokeApp')
   }
-  
+
   toSetPokemonNameTitle(pokemon: string): void{
     this.titleService.setTitle(`${pokemon} | PokeApp`)
   }

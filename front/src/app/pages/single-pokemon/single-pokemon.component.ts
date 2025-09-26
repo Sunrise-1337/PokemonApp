@@ -24,6 +24,7 @@ import { MatButton } from '@angular/material/button';
 import { RoutesMetaTagsService } from 'src/app/services/routes-meta-tags.service';
 import { RoutesMetaDataConstants } from 'src/app/constants/routes-meta-data.constants';
 import {IsArrayPipe} from "./pipes/is-array.pipe";
+import {IsPokemonFavouritePipe} from "../../shared/pipes/is-pokemon-favourite.pipe";
 
 @Component({
   standalone: true,
@@ -44,6 +45,7 @@ import {IsArrayPipe} from "./pipes/is-array.pipe";
     TitleCasePipe,
     MatCardImage,
     IsArrayPipe,
+    IsPokemonFavouritePipe,
   ]
 })
 

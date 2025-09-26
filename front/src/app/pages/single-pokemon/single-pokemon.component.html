@@ -17,7 +17,7 @@
 
           <div class="single__top-actions">
             <button class="single__top-like" mat-button (click)="toggleFav()">
-              <mat-icon [innerText]="isFav(pokemonModel.name) ? 'favorite' : 'favorite_border'"></mat-icon>
+              <mat-icon [innerText]="(pokemonModel.name | isPokemonFavourite) ? 'favorite' : 'favorite_border'"></mat-icon>
             </button>
           </div>
         </div>

@@ -30,7 +30,7 @@ export class ApiService {
   getOnePokemon(id: number): Observable<OnePokemonResponse>{
     return this.http.get<OnePokemonResponse>(base__url + sublinks.pokemon + id)
   }
-  
+
   getOnePokemonByUrl(url: string): Observable<OnePokemonResponse>{
     return this.http.get<OnePokemonResponse>(url)
   }
@@ -46,7 +46,7 @@ export class ApiService {
   getSpeciesInfo(id: string): Observable<SpeciesInfo>{
     return this.http.get<SpeciesInfo>(base__url + sublinks.species + id)
   }
-  
+
 
 
 
@@ -63,7 +63,7 @@ export class ApiService {
     return this.http.get<Region>(url)
   }
 
-  
+
   getTypeByUrl(url: string): Observable<TypeResponse>{
     return this.http.get<TypeResponse>(url)
   }
@@ -71,20 +71,4 @@ export class ApiService {
   getAllTypes(): Observable<AllResultsResponseModel>{
     return this.http.get<AllResultsResponseModel>(base__url + sublinks.type)
   }
-
-
-
-  getAllBerries(amount: number = 0, page: number = 0): Observable<AllResultsResponseModel>{
-    const params = amount ? `?offset=${amount * page}&limit=${amount}` : ''
-    return this.http.get<AllResultsResponseModel>(base__url + sublinks.berries + params)
-  }
-
-  getOneBerry(id: number): Observable<null>{
-    return this.http.get<null>(base__url + sublinks.berries + id)
-  }
-
-
-
-
-  getAllGames(){}
 }
