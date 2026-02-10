@@ -1,0 +1,31 @@
+variables:
+  IMAGE_NAME: 13sunrise37/pokemon-app
+  IMAGE_TAG: ssr-app-1.0
+
+stages:
+    - build
+    - deploy
+
+build_image:
+  stage: build
+  image: docker:29.2.1
+  services:
+    - docker:29.2.1-dind-alpine3.23
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - docker login -u $REGISTRY_USER -p $REGISTRY_PASS
+  script:
+    - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+    - docker push $IMAGE_NAME:$IMAGE_TAG
+
+deploy:
+  stage: deploy
+  before_script:
+    - chmod 400 $SSH_KEY
+  script:
+    - ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@209.38.250.144 "
+        echo $REGISTRY_PASS | docker login -u $REGISTRY_USER --password-stdin &&
+        docker stop my-app || true &&
+        docker rm my-app || true &&
+        docker run -d --name my-app -p 80:4000 $IMAGE_NAME:$IMAGE_TAG"
